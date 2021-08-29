@@ -40,7 +40,7 @@ int strcmpMy (char* str1, char* str2)
 size_t strlenMy (const char *str)
 {
     int length = 0;
-    for (length; str [length] != '\0'; length++)
+    for (; str [length] != '\0'; length++)
         ;
 
     return length;
@@ -73,7 +73,8 @@ char* strcpyMy (char* destStr, const char* srcStr)
     for (; srcStr [i] != '\0';  i++)
         destStr [i] = srcStr[i];
 
-    destStr [++i] = srcStr [++i];
+    ++i;
+    destStr [i] = srcStr [i];
     return destStr;
 }
 
@@ -134,7 +135,7 @@ char *strncatMy (char *destStr, const char *srcStr, size_t amount)
 
 char *fgetsMy (char *str, int maxSize, FILE* stream)
 {
-    if (str == nullptr || stream == nullptr, maxSize <= 0)
+    if (str == nullptr || stream == nullptr || maxSize <= 0)
     {
         errno = EINVAL;
         return nullptr;
@@ -174,7 +175,8 @@ char* strdupMy (const char* srcStr)
     for (; srcStr [i] != '\0';  i++)
         strCpy [i] = srcStr[i];
 
-    strCpy [++i] = srcStr [++i];
+    ++i;
+    strCpy [i] = srcStr [i];
 
 
     return strCpy;
@@ -204,8 +206,8 @@ size_t getlineMy (char **lineptr, int *maxSize, FILE* stream)
         if (character == '\n' || character == EOF)
             break;
 
-            str = (char*)realloc (str0, currentBuffSize*2);
-            *str = character;
+        str = (char*)realloc (str0, currentBuffSize*2);
+        *str = character;
     }
 
     *(str) = '\0';
