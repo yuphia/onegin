@@ -12,12 +12,12 @@ const char* strchrMy_c (const char *str, int symbol);
       char* strchrMy   (      char *str, int symbol);
 
 char *fgetsMy (char *str, int maxSize, FILE* stream);
-size_t getlineMy (char *str, int maxSize, FILE* stream);
+size_t getlineMy (char **lineptr, int *maxSize, FILE* stream);
 
 int putsMy (char* str)
 {
     int character = 0;
-    int counter = 0;
+    size_t counter = 0;
 
     do
     {
@@ -25,8 +25,6 @@ int putsMy (char* str)
         counter++;
     }
     while (character != '\0');
-
-    putchar ('\n');
 
     return (ferror (stdout)) ? EOF : 0;
 }
@@ -71,7 +69,7 @@ char* strchrMy (char *str, int symbol)
 
 char* strcpyMy (char* destStr, const char* srcStr)
 {
-    int i = 0;
+    size_t i = 0;
     for (; srcStr [i] != '\0';  i++)
         destStr [i] = srcStr[i];
 
@@ -87,7 +85,7 @@ char* strncpyMy (char* destStr, const char* srcStr, size_t amount)
         return (char*)-1;
     }
 
-    int i = 0;
+    size_t i = 0;
 
     for (; i < amount;  i++)
     {
@@ -106,7 +104,7 @@ char* strncpyMy (char* destStr, const char* srcStr, size_t amount)
 char *strcatMy (char *destStr, const char *srcStr)
 {
     int destStr_len = strlenMy (destStr);
-    int i = 0;
+    size_t i = 0;
 
     for (; srcStr[i] != '\0'; i++)
         destStr [destStr_len + i] = srcStr[i];
@@ -118,7 +116,7 @@ char *strcatMy (char *destStr, const char *srcStr)
 char *strncatMy (char *destStr, const char *srcStr, size_t amount)
 {
     int destStr_len = strlenMy (destStr);
-    int i = 0;
+    size_t i = 0;
 
     for (; i < amount;  i++)
     {
@@ -158,7 +156,9 @@ char *fgetsMy (char *str, int maxSize, FILE* stream)
         *str = character;
     }
 
-    *(str) = '\n';
+    if (character != EOF)
+        *(str) = '\n';
+
     *(str + 1) = '\0';
     return (character == EOF) ? NULL : str;
 }
@@ -166,11 +166,11 @@ char *fgetsMy (char *str, int maxSize, FILE* stream)
 char* strdupMy (const char* srcStr)
 {
     if (srcStr == NULL)
-        return NULL;
+        return nullptr;
 
     char* strCpy = (char*)malloc (sizeof srcStr);
 
-    int i = 0;
+    size_t i = 0;
     for (; srcStr [i] != '\0';  i++)
         strCpy [i] = srcStr[i];
 
@@ -180,18 +180,21 @@ char* strdupMy (const char* srcStr)
     return strCpy;
 }
 
-size_t getlineMy (char *str, int maxSize, FILE* stream)
+size_t getlineMy (char **lineptr, int *maxSize, FILE* stream)
 {
-    if (str == nullptr || stream == nullptr, maxSize <= 0)
+    if (maxSize == NULL || stream == 0)
     {
         errno = EINVAL;
         return -1;
     }
 
-    int character = '\0';
-    char* str0 = str;
+    size_t currentBuffSize = 3;
+    char *str = (char*)calloc (currentBuffSize, sizeof (char));
 
-    for (; str - str0 < maxSize; str++)
+    char* str0 = str;
+    char character = 0;
+
+    for (; str - str0 < *maxSize; str++)
     {
         //printf ("%d\n", i);
         character = getc (stream);
@@ -201,11 +204,17 @@ size_t getlineMy (char *str, int maxSize, FILE* stream)
         if (character == '\n' || character == EOF)
             break;
 
-        *str = character;
+            str = (char*)realloc (str0, currentBuffSize*2);
+            *str = character;
     }
 
-    *(str) = '\n';
-    *(str + 1) = '\0';
+    *(str) = '\0';
 
-    return sizeof (str - str0);
+    if (lineptr != NULL)
+    {
+        *lineptr = str;
+        return sizeof *lineptr;
+    }
+
+    return sizeof str0;
 }

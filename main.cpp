@@ -37,17 +37,23 @@ int readFile (char *arrayText, FILE* file, int *rows)
     *rows = 0;
     int i = 0;
 
+    char *pointer = NULL;
     ///////
+    int lineMaxSize = MAXLINE;
+
     do
     {
         checkPtr = fgetsMy (arrayText + i, MAXLINE, file);
-        getlineMy (arrayText + i, MAXLINE, file);
+
+        pointer = arrayText + i;
+        //getlineMy (&pointer, &lineMaxSize, file);
 
         (*rows)++;
         i += MAXLINE;
     }
     while (checkPtr != nullptr);
     ///////
+    //free (pointer);
 
     return (ferror (file)) ? 0 : EOF;
 }

@@ -1,0 +1,17 @@
+#include "strlib.h"
+
+enum ERORRS {
+            SUCCESS,
+            WRONG_OUTPUT
+            };
+
+enum ERRORS testputsMy ();
+enum ERORRS teststrcmpMy ();
+enum ERORRS teststrlenMy ();
+enum ERORRS teststrcpyMy ();
+enum ERORRS teststrncpyMy ();
+enum ERORRS teststrchrMy_c ();
+enum ERORRS teststrchrMy ();
+enum ERORRS testfgetsMy ();
+enum ERORRS testgetlineMy ();
+
