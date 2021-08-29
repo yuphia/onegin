@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <iostream>
+#include "myAssert.h"
+#include "strlibMy.h"
 
 const int MAXLINE = 100;
 const int MAXROW = 27000;
@@ -9,6 +11,7 @@ void printText (char* text, int rows);
 int readFile (char *arrayText, FILE* file, int* rows);
 
 int putsMy (char* str);
+
 
 int main()
 {
@@ -37,7 +40,9 @@ int readFile (char *arrayText, FILE* file, int *rows)
     ///////
     do
     {
-        checkPtr = fgets (arrayText + i, MAXLINE, file);
+        checkPtr = fgetsMy (arrayText + i, MAXLINE, file);
+        getlineMy (arrayText + i, MAXLINE, file);
+
         (*rows)++;
         i += MAXLINE;
     }
@@ -57,21 +62,18 @@ int readFile (char *arrayText, FILE* file, int *rows)
     }
 }
 
-int putsMy (char* str)
-{
-    int character = 0;
-    int counter = 0;
 
-    do
-    {
-        character = putchar (str [counter]);
-        counter++;
-    }
-    while (character != '\0');
 
-    putchar ('\n');
 
-    return (ferror (stdout)) ? EOF : 0;
-}
+
+
+
+
+
+
+
+
+
+
 
 
