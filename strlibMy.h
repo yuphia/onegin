@@ -192,7 +192,7 @@ size_t getlineMy (char **lineptr, size_t *maxSize, FILE* stream)
     {
         size_t maxSizeSafe = 1;
         maxSize = &maxSizeSafe;
-        printf ("%ld\n", *maxSize);
+        //printf ("%ld\n", *maxSize);
 
         strStart = (char*)calloc (*maxSize, sizeof (char));
         strEnd = strStart + *maxSize;
@@ -204,7 +204,7 @@ size_t getlineMy (char **lineptr, size_t *maxSize, FILE* stream)
     }
 
     if (strStart != NULL)
-        printf ("memory created successfully\n");
+        //printf ("memory created successfully\n");
 
     char *currentElement = strStart;
 
@@ -216,14 +216,14 @@ size_t getlineMy (char **lineptr, size_t *maxSize, FILE* stream)
 
         if (true)
         {
-            printf ("maxSize = %ld\n", *maxSize);
+            //printf ("maxSize = %ld\n", *maxSize);
             *maxSize *= 2;
             strStart = (char*)realloc (strStart, *maxSize);
             strEnd = strEnd + *maxSize;
-            printf ("maxSize = %ld\n", *maxSize);
+            //printf ("maxSize = %ld\n", *maxSize);
         }
 
-        printf ("currentElement = %s\n", currentElement);
+        //printf ("currentElement = %s\n", currentElement);
 
         *currentElement = character;
 
@@ -240,8 +240,6 @@ size_t getlineMy (char **lineptr, size_t *maxSize, FILE* stream)
 
     *(currentElement) = '\0';
 
-    printf ("x%sx\n", *lineptr);
     *lineptr = strStart;
-    printf ("y%sy\n", *lineptr);
     return sizeof (*lineptr);
 }

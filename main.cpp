@@ -3,7 +3,7 @@
 #include "myAssert.h"
 #include "strlibMy.h"
 
-const int MAXLINE = 100;
+const int MAXROWLENGTH = 100;
 const int MAXROW = 27000;
 
 
@@ -20,7 +20,7 @@ int main()
     input = fopen ("input.txt", "rb");
 
     int rows = 0;
-    char *arrayTextTest [MAXLINE] = {0};
+    char *arrayTextTest [MAXROW] = {0};
 
     if (readFile (arrayTextTest, input, &rows) == 0)
         perror ("An error in function readFile");
@@ -36,10 +36,17 @@ int main()
 int readFile (char *arrayText[], FILE* file, int *row)
 {
     *row = 0;
-    while (*row < 10)
+    while (*row < MAXROW)
     {
-        getline (arrayText + *row, 0, file);
-        printf ("text: %s, row = %d\n", *(arrayText + *row), *row);
+        size_t bufferSize = 25;
+        char* strBuffer = (char*)calloc (bufferSize, sizeof(char));
+        getline (&strBuffer, &bufferSize, file);
+
+        if (feof (file))
+            break;
+
+        *(arrayText + *row) = strBuffer;
+        printf ("text: %s", *(arrayText + *row));
         (*row)++;
     }
 
@@ -48,12 +55,8 @@ int readFile (char *arrayText[], FILE* file, int *row)
 
  void printText (char* text[], int rows)
 {
-    printf ("enter printText\n");
     for (int counter = 0; counter < rows;  counter++)
-    {
-        printf ("%s\n", *(text + counter));
-    }
-    printf ("leave printText\n");
+        printf ("%s", text [counter]);
 }
 
 void arrayFree (char *arrayText[], size_t arraySize)
