@@ -17,7 +17,7 @@ void arrayFree (char *arrayText[], size_t arraySize);
 int main()
 {
     FILE *input = nullptr;
-    input = fopen ("input.txt", "r");
+    input = fopen ("input.txt", "rb");
 
     int rows = 0;
     char *arrayTextTest [MAXLINE] = {0};
@@ -36,9 +36,10 @@ int main()
 int readFile (char *arrayText[], FILE* file, int *row)
 {
     *row = 0;
-    while (true)
+    while (*row < 10)
     {
         getline (arrayText + *row, 0, file);
+        printf ("text: %s, row = %d\n", *(arrayText + *row), *row);
         (*row)++;
     }
 
@@ -47,10 +48,12 @@ int readFile (char *arrayText[], FILE* file, int *row)
 
  void printText (char* text[], int rows)
 {
+    printf ("enter printText\n");
     for (int counter = 0; counter < rows;  counter++)
     {
-        printf ("%s\n", text [counter]);
+        printf ("%s\n", *(text + counter));
     }
+    printf ("leave printText\n");
 }
 
 void arrayFree (char *arrayText[], size_t arraySize)
