@@ -1,2 +1,2 @@
 all:
-	g++ -g-Wall -Wextra -Wpedantic -Werror main.cpp -o onegin.out
+	g++ -g -Wall -Wextra -Wpedantic -Werror main.cpp -o onegin.out

@@ -6,12 +6,13 @@
 const int MAXLINE = 100;
 const int MAXROW = 27000;
 
-void printText (char* text, int rows);
 
-int readFile (char *arrayText, FILE* file, int* rows);
 
-int putsMy (char* str);
+void printText (char* text[], int rows);
 
+int readFile (char *arrayText[], FILE* file, int* rows);
+
+void arrayFree (char *arrayText[], size_t arraySize);
 
 int main()
 {
@@ -19,56 +20,48 @@ int main()
     input = fopen ("input.txt", "r");
 
     int rows = 0;
-    char arrayText [MAXLINE*MAXROW] = {0};
+    char *arrayTextTest [MAXLINE] = {0};
 
-    if (readFile (arrayText, input, &rows) == 0)
+    if (readFile (arrayTextTest, input, &rows) == 0)
         perror ("An error in function readFile");
     else
-        printText (arrayText, rows);
+        printText (arrayTextTest, rows);
 
+    arrayFree (arrayTextTest, rows);
     fclose (input);
 
     return 0;
 }
 
-int readFile (char *arrayText, FILE* file, int *rows)
+int readFile (char *arrayText[], FILE* file, int *row)
 {
-    char *checkPtr = nullptr;
-    *rows = 0;
-    int i = 0;
-
-    char *pointer = NULL;
-    ///////
-    int lineMaxSize = MAXLINE;
-
-    do
+    *row = 0;
+    while (true)
     {
-        checkPtr = fgetsMy (arrayText + i, MAXLINE, file);
-
-        pointer = arrayText + i;
-        //getlineMy (&pointer, &lineMaxSize, file);
-
-        (*rows)++;
-        i += MAXLINE;
+        getline (arrayText + *row, 0, file);
+        (*row)++;
     }
-    while (checkPtr != nullptr);
-    ///////
-    //free (pointer);
 
     return (ferror (file)) ? 0 : EOF;
 }
 
- void printText (char* text, int rows)
+ void printText (char* text[], int rows)
 {
-    int checkPutsOutput = 0, currentRow = 0;
-
-    for (int counter = 0; currentRow <= rows; currentRow++, counter += MAXLINE)
+    for (int counter = 0; counter < rows;  counter++)
     {
-        checkPutsOutput = putsMy (text + counter);
+        printf ("%s\n", text [counter]);
     }
 }
 
+void arrayFree (char *arrayText[], size_t arraySize)
+{
 
+    for (size_t i = 0; i < arraySize; i++)
+        {
+        if (arrayText[i])
+            free (arrayText [i]);
+        }
+}
 
 
 

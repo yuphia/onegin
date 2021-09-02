@@ -12,19 +12,20 @@ const char* strchrMy_c (const char *str, int symbol);
       char* strchrMy   (      char *str, int symbol);
 
 char *fgetsMy (char *str, int maxSize, FILE* stream);
-size_t getlineMy (char **lineptr, int *maxSize, FILE* stream);
+size_t getlineMy (char **lineptr, size_t *maxSize, FILE* stream);
 
 int putsMy (char* str)
 {
-    int character = 0;
     size_t counter = 0;
+    printf ("%d", str [counter]);
 
-    do
+    while (str [counter] != '\0')
     {
-        character = putchar (str [counter]);
+        printf ("%d", str [counter]);
+        putchar (str [counter]);
         counter++;
+        printf ("123\n");
     }
-    while (character != '\0');
 
     return (ferror (stdout)) ? EOF : 0;
 }
@@ -182,41 +183,65 @@ char* strdupMy (const char* srcStr)
     return strCpy;
 }
 
-size_t getlineMy (char **lineptr, int *maxSize, FILE* stream)
+size_t getlineMy (char **lineptr, size_t *maxSize, FILE* stream)
 {
-    if (maxSize == NULL || stream == 0)
+    char *strEnd = NULL;
+    char *strStart = NULL;
+
+    if (*lineptr == 0)
     {
-        errno = EINVAL;
-        return -1;
+        size_t maxSizeSafe = 1;
+        maxSize = &maxSizeSafe;
+        printf ("%ld\n", *maxSize);
+
+        strStart = (char*)calloc (*maxSize, sizeof (char));
+        strEnd = strStart + *maxSize;
+    }
+    else
+    {
+        strStart = *lineptr;
+        strEnd = *lineptr + *maxSize;
     }
 
-    size_t currentBuffSize = 3;
-    char *str = (char*)calloc (currentBuffSize, sizeof (char));
+    if (strStart != NULL)
+        printf ("memory created successfully\n");
 
-    char* str0 = str;
+    char *currentElement = strStart;
+
     char character = 0;
 
-    for (; str - str0 < *maxSize; str++)
+    for (;; currentElement++)
     {
-        //printf ("%d\n", i);
         character = getc (stream);
 
-        //putc (character, stdout);
+        if (true)
+        {
+            printf ("maxSize = %ld\n", *maxSize);
+            *maxSize *= 2;
+            strStart = (char*)realloc (strStart, *maxSize);
+            strEnd = strEnd + *maxSize;
+            printf ("maxSize = %ld\n", *maxSize);
+        }
+
+        printf ("currentElement = %s\n", currentElement);
+
+        *currentElement = character;
 
         if (character == '\n' || character == EOF)
+        {
             break;
-
-        str = (char*)realloc (str0, currentBuffSize*2);
-        *str = character;
+        }
     }
 
-    *(str) = '\0';
+    currentElement++;
 
-    if (lineptr != NULL)
-    {
-        *lineptr = str;
-        return sizeof *lineptr;
-    }
+    if (currentElement > strEnd)
+        currentElement = (char*)realloc (strStart, (size_t)(*maxSize)*2);
 
-    return sizeof str0;
+    *(currentElement) = '\0';
+
+    printf ("x%sx\n", *lineptr);
+    *lineptr = strStart;
+    printf ("y%sy\n", *lineptr);
+    return sizeof (*lineptr);
 }
