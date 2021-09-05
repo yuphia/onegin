@@ -29,7 +29,6 @@ int main()
         perror ("An error in function readFile");
     else
     {
-        printf ("rows = %d", rows);
         qsortMy ((void**)arrayTextTest, 0, rows-1, cmpstr);
         printText (arrayTextTest, rows);
     }
@@ -43,7 +42,7 @@ int main()
 int readFile (char *arrayText[], FILE* file, int *row)
 {
     *row = 0;
-    while (*row < 10/*MAXROW*/)
+    while (*row < MAXROW)
     {
         size_t bufferSize = 25;
         char* strBuffer = (char*)calloc (bufferSize, sizeof(char));

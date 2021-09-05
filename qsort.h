@@ -32,59 +32,43 @@ void swap (void* array[], int i, int j)
 
 void qsortMy (void *array[], int first, int last, int (*comparator) (void*, void*))
 {
-    int pivot = first + 1 + (last - first)/2;
-    printf ("pivot = %s\n", (char*)array[pivot]);
-    //swap (array, pivot, last);
+    int pivot, i, j = 0;
+    pivot = first + 1 + (last - first)/2;
 
-    //pivot = last;
-    int i = first;
-    int j = last - 1;
-
-
-
-    if (first < last)
+    if (1 < last - first)
     {
-        //printText ((char**)array, 10);
+    swap (array, pivot, last);
+    pivot = last;
+
+    i = first;
+    j = last - 1;
 
         while (i < j)
         {
-            //printf ("array[pivot = %d] = %s\n", pivot, (char*)array[pivot]);
-
-            while ((*comparator) (array[pivot], array[i]) >= 0 && i < last)
-            {
+            while ((*comparator) (array[pivot], array[i]) >= 0 && i < last - 1)
                 i++;
-            }
-            //printf ("array[i = %d] = %s\n", i, (char*)array[i]);
 
-            while (!((*comparator) (array[pivot], array[j]) >= 0))
-            {
+            while (!( (*comparator) (array[pivot], array[j]) >= 0) && i < j)  // j > pivot
                 j--;
-            }
-            //printf ("array[j = %d] = %s\n", j, (char*)array[j]);
 
             if (i < j)
-            {
-                //printf ("swapping\n");
                 swap (array, i, j);
-            }
         }
 
-        //printf ("RECURSE\n");
+        swap (array, j, pivot);
 
-        swap (array, pivot, j);
-
-        //printText ((char**)array, 10);
+        printText ((char**)array, 10);
 
         if (j > 0)
-        {   /*
-            printf ("first = %d, last = %d"
-                    "\n"
-                    "first = %d, last = %d\n", first, j - 1, j + 1, last);*/
-
+        {
             qsortMy (array, first, j - 1, comparator);
             qsortMy (array, j + 1, last, comparator);
         }
     }
+    else
+        if ((*comparator) (array[last], array[first]) < 0)
+            swap (array, last, first);
+
 }
 
 void printMassive (int *array, int size)
