@@ -2,17 +2,20 @@
 #include <iostream>
 #include "myAssert.h"
 #include "strlibMy.h"
+#include "qsort.h"
 
 const int MAXROWLENGTH = 100;
 const int MAXROW = 27000;
 
 
 
-void printText (char* text[], int rows);
+//void printText (char* text[], int rows);
 
 int readFile (char *arrayText[], FILE* file, int* rows);
 
 void arrayFree (char *arrayText[], size_t arraySize);
+
+int cmpstr (void* v1, void* v2);
 
 int main()
 {
@@ -25,7 +28,11 @@ int main()
     if (readFile (arrayTextTest, input, &rows) == 0)
         perror ("An error in function readFile");
     else
+    {
+        printf ("rows = %d", rows);
+        qsortMy ((void**)arrayTextTest, 0, rows-1, cmpstr);
         printText (arrayTextTest, rows);
+    }
 
     arrayFree (arrayTextTest, rows);
     fclose (input);
@@ -36,7 +43,7 @@ int main()
 int readFile (char *arrayText[], FILE* file, int *row)
 {
     *row = 0;
-    while (*row < MAXROW)
+    while (*row < 10/*MAXROW*/)
     {
         size_t bufferSize = 25;
         char* strBuffer = (char*)calloc (bufferSize, sizeof(char));
@@ -46,18 +53,18 @@ int readFile (char *arrayText[], FILE* file, int *row)
             break;
 
         *(arrayText + *row) = strBuffer;
-        printf ("text: %s", *(arrayText + *row));
+        //printf ("text: %s", *(arrayText + *row));
         (*row)++;
     }
 
     return (ferror (file)) ? 0 : EOF;
 }
 
- void printText (char* text[], int rows)
+ /*void printText (char* text[], int rows)
 {
     for (int counter = 0; counter < rows;  counter++)
         printf ("%s", text [counter]);
-}
+} */
 
 void arrayFree (char *arrayText[], size_t arraySize)
 {
@@ -69,7 +76,16 @@ void arrayFree (char *arrayText[], size_t arraySize)
         }
 }
 
+int cmpstr (void* v1, void* v2)
+{
+    //printf ("enter cmpstr\n");
+    //printf ("v2 = %s", (char*)v2);
 
+    char *a1 = (char*)v1;
+    char *a2 = (char*)v2;
+
+    return strcmpMy(a1, a2);
+}
 
 
 

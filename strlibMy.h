@@ -1,3 +1,4 @@
+#pragma once
 #include <stdio.h>
 #include <errno.h>
 
@@ -181,7 +182,7 @@ char* strdupMy (const char* srcStr)
 
 
     return strCpy;
-}
+}    /*
 
 size_t getlineMy (char **lineptr, size_t *maxSize, FILE* stream)
 {
@@ -242,4 +243,4 @@ size_t getlineMy (char **lineptr, size_t *maxSize, FILE* stream)
 
     *lineptr = strStart;
     return sizeof (*lineptr);
-}
+}        */
