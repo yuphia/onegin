@@ -52,21 +52,21 @@ static void dump_list(const char *tag, int *ptr, int left, int right)
 static int partition(void *array, int left, int right, int (*comparator) (const void*, const void*))
 {
     int pivot = left;
-    int p_val = array[pivot];
+    int p_val = *((int*) array + pivot);
 
     while (left < right)
     {
-        while (comparator (array + left, &p_val) <= 0/*array[left] <= p_val*/)
+        while (comparator ((int*)array + left, &p_val) <= 0/*array[left] <= p_val*/)
             left++;
 
-        while (comparator (array + right, &p_val) > 0/*array[right] > p_val)*/)
+        while (comparator ((int*)array + right, &p_val) > 0/*array[right] > p_val)*/)
             right--;
 
         if (left < right)
-            swap(array + left, array + right, sizeof(int));
+            swap((int*)array + left, (int*)array + right, sizeof(int));
     }
 
-    swap(&array[pivot], &array[right], sizeof(int));
+    swap((int*) array + pivot, (int*) array + right, sizeof(int));
     return right;
 }
 
