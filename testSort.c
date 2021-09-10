@@ -5,18 +5,20 @@
 
 static inline void swap(int *a, int *b);
 static void dump_list(const char *tag, int *ptr, int left, int right);
-static int partition(int *array, int left, int right, void (*comparator) (const void*, const void*));
-void quicksort(int *array, int start, int end, int (*comparator) (const void*, const void*));
+static int partition(void *array, int left, int right, void (*comparator) (const void*, const void*));
+void quicksort(void *array, int start, int end, int (*comparator) (const void*, const void*));
 bool isSorted (int* array, size_t arraySize);
+static inline void swap (void *a, void *b, size_t size);
 
 // Comparators
 int compareInt (const void* n1, const void* n2);
+int compareIntReverse (const void* n1, const void* n2);
 
 int main()
 {
     int myList[] = {12, 43, -16, 0, 2, 5, 1, 13, 2, 2, -1};
     dump_list("UNSORTED LIST", myList, 0, 9);
-    quicksort(myList, 0, 9, compareInt);
+    quicksort(myList, 0, 9, compareIntReverse);
     dump_list("SORTED LIST", myList, 0, 9);
 
     printf ("array is sorted: %d\n", isSorted (myList, 10));
@@ -26,11 +28,16 @@ int main()
 
 
 // Swapping algorithm
-static inline void swap(int *a, int *b)
+static inline void swap (void *a, void *b, size_t size)
 {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
+    unsigned char temp = 0, *first = (unsigned char*)a, *second = (unsigned char*)b;
+
+    for (int i = 0; i < size; i++)
+    {
+        temp = first[i];
+        first[i] = second[i];
+        second[i] = temp;
+    }
 }
 
 static void dump_list(const char *tag, int *ptr, int left, int right)
@@ -42,7 +49,7 @@ static void dump_list(const char *tag, int *ptr, int left, int right)
 }
 
 // Partitioning algorithm
-static int partition(int *array, int left, int right, int (*comparator) (const void*, const void*))
+static int partition(void *array, int left, int right, int (*comparator) (const void*, const void*))
 {
     int pivot = left;
     int p_val = array[pivot];
@@ -56,15 +63,15 @@ static int partition(int *array, int left, int right, int (*comparator) (const v
             right--;
 
         if (left < right)
-            swap(&array[left], &array[right]);
+            swap(array + left, array + right, sizeof(int));
     }
 
-    swap(&array[pivot], &array[right]);
+    swap(&array[pivot], &array[right], sizeof(int));
     return right;
 }
 
 // Quicksort recursion
-void quicksort(int *array, int start, int end, int (*comparator) (const void*, const void*))
+void quicksort(void *array, int start, int end, int (*comparator) (const void*, const void*))
 {
     if (start >= end)
         return;
@@ -89,4 +96,9 @@ bool isSorted (int* array, size_t arraySize)
 int compareInt (const void* n1, const void* n2)
 {
     return (*(int*)n1 - *(int*)n2);
+}
+
+int compareIntReverse (const void* n1, const void* n2)
+{
+    return (-(*(int*)n1 - *(int*)n2));
 }
