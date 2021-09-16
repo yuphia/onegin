@@ -51,16 +51,18 @@ static void dump_list(const char *tag, int *ptr, int left, int right)
 static int partition(void *array, int left, int right, size_t elementSize, int (*comparator) (const void*, const void*))
 {
     int pivot = left;
-    char* p_val = *(char**)(array + elementSize * pivot);
+    //char* p_val = *(char**)(array + elementSize * pivot);
+    void* p_val = calloc (1, elementSize);
+    memcpy (p_val, array + elementSize * pivot, elementSize);
 
     if (right - left > 1)
     {
         while (left < right)
         {
-            while (comparator (array + elementSize * left, &p_val) <= 0/*array[left] <= p_val*/)
+            while (comparator (array + elementSize * left, p_val) <= 0/*array[left] <= p_val*/)
                 left++;
 
-            while (comparator (array + elementSize * right, &p_val) > 0/*array[right] > p_val)*/)
+            while (comparator (array + elementSize * right, p_val) > 0/*array[right] > p_val)*/)
                 right--;
 
             if (left < right)
@@ -74,6 +76,8 @@ static int partition(void *array, int left, int right, size_t elementSize, int (
         if (comparator (array + elementSize * left, array + elementSize * right) > 0)
             swap (array + elementSize * left, array + elementSize * right, sizeof(elementSize));
     }
+
+    free (p_val);
 
     return right;
 }
