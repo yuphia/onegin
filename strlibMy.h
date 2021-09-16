@@ -23,7 +23,7 @@ size_t getlineMy (char **lineptr, size_t *maxSize, FILE* stream);
 
 int putsMy (char* str)
 {
-    MY_ASSERT (str != 0, "pointer to str equals NULL");
+    MY_ASSERT (str != nullptr, "pointer to str equals nullptr");
 
     size_t counter = 0;
     printf ("%d", str [counter]);
@@ -41,8 +41,8 @@ int putsMy (char* str)
 
 int strcmpMy (const char* str1, const char* str2)
 {
-    MY_ASSERT (str1 != 0, "pointer to str1 equals NULL");
-    MY_ASSERT (str2 != 0, "pointer to str2 equals NULL");
+    MY_ASSERT (str1 != nullptr, "pointer to str1 equals nullptr");
+    MY_ASSERT (str2 != nullptr, "pointer to str2 equals nullptr");
 
     while (*str1 == *str2 && *str1 != '\0')
     {
@@ -55,7 +55,7 @@ int strcmpMy (const char* str1, const char* str2)
 
 size_t strlenMy (const char *str)
 {
-    MY_ASSERT (str != 0, "pointer to str equals NULL");
+    MY_ASSERT (str != nullptr, "pointer to str equals nullptr");
 
     int length = 0;
     for (; str [length] != '\0'; length++)
@@ -66,7 +66,7 @@ size_t strlenMy (const char *str)
 
 const char* strchrMy_c (const char *str, int symbol)
 {
-    MY_ASSERT (str != 0, "pointer to str equals NULL");
+    MY_ASSERT (str != nullptr, "pointer to str equals nullptr");
 
     for (; *str != '\0'; str++)
         if (*str == (char)symbol)
@@ -77,7 +77,7 @@ const char* strchrMy_c (const char *str, int symbol)
 
 char* strchrMy (char *str, int symbol)
 {
-    MY_ASSERT (str != 0, "pointer to str equals NULL");
+    MY_ASSERT (str != nullptr, "pointer to str equals nullptr");
 
     for (; *str != '\0'; str++)
         if (*str == (char)symbol)
@@ -91,8 +91,8 @@ char* strchrMy (char *str, int symbol)
 
 char* strcpyMy (char* destStr, const char* srcStr)
 {
-    MY_ASSERT (destStr != 0, "pointer to destStr equals NULL");
-    MY_ASSERT (srcStr != 0, "pointer to srcStr equals NULL");
+    MY_ASSERT (destStr != nullptr, "pointer to destStr equals nullptr");
+    MY_ASSERT (srcStr  != nullptr, "pointer to srcStr  equals nullptr");
 
     size_t i = 0;
     for (; srcStr [i] != '\0';  i++)
@@ -105,8 +105,8 @@ char* strcpyMy (char* destStr, const char* srcStr)
 
 char* strncpyMy (char* destStr, const char* srcStr, size_t amount)
 {
-    MY_ASSERT (destStr != 0, "pointer to destStr equals NULL");
-    MY_ASSERT (srcStr != 0, "pointer to srcStr equals NULL");
+    MY_ASSERT (destStr != nullptr, "pointer to destStr equals nullptr");
+    MY_ASSERT (srcStr  != nullptr, "pointer to srcStr  equals nullptr");
 
     if (destStr == nullptr || srcStr == nullptr)
     {
@@ -132,8 +132,8 @@ char* strncpyMy (char* destStr, const char* srcStr, size_t amount)
 
 char *strcatMy (char *destStr, const char *srcStr)
 {
-    MY_ASSERT (destStr == 0, "pointer to destStr equals NULL");
-    MY_ASSERT (srcStr == 0, "pointer to srcStr equals NULL");
+    MY_ASSERT (destStr != nullptr, "pointer to destStr equals nullptr");
+    MY_ASSERT (srcStr  != nullptr, "pointer to srcStr  equals nullptr");
 
     int destStr_len = strlenMy (destStr);
     size_t i = 0;
@@ -147,8 +147,8 @@ char *strcatMy (char *destStr, const char *srcStr)
 
 char *strncatMy (char *destStr, const char *srcStr, size_t amount)
 {
-    MY_ASSERT (destStr == 0, "pointer to destStr equals NULL");
-    MY_ASSERT (srcStr == 0, "pointer to srcStr equals NULL");
+    MY_ASSERT (destStr != nullptr, "pointer to destStr equals nullptr");
+    MY_ASSERT (srcStr  != nullptr, "pointer to srcStr  equals nullptr");
 
     int destStr_len = strlenMy (destStr);
     size_t i = 0;
@@ -200,7 +200,7 @@ char *fgetsMy (char *str, int maxSize, FILE* stream)
 
 char* strdupMy (const char* srcStr)
 {
-    MY_ASSERT (srcStr == 0, "pointer to srcStr equals NULL");
+    MY_ASSERT (srcStr != nullptr, "pointer to srcStr equals nullptr");
 
     if (srcStr == NULL)
         return nullptr;

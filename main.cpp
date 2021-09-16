@@ -8,7 +8,7 @@ const int MAXROWLENGTH = 100;
 const int MAXROW = 27000;//27000;
 
 
-int readFile (char *arrayText[], FILE* file, int* rows);
+int readFile (char *arrayText[], FILE* file, size_t* rows);
 
 void arrayFree (char *arrayText[], size_t arraySize);
 
@@ -21,32 +21,36 @@ int main()
     FILE *input = nullptr;
     input = fopen ("input.txt", "rb");
 
-    int rows = 0;
-    char *arrayTextTest [MAXROW] = {0};
+    size_t rows = 0;
+    char *arrayText [MAXROW] = {0};
 
-    if (readFile (arrayTextTest, input, &rows) == 0)
+    if (readFile (arrayText, input, &rows) == 0)
         perror ("An error in function readFile");
     else
     {
-        printText (arrayTextTest, rows);
+        printText (arrayText, rows);
         printf ("\n");
 
         //qsort ((void*)arrayTextTest, rows, sizeof (char*), comparatorStr);
-        quicksort ((void*)arrayTextTest, 0, rows - 1, sizeof (char*), comparatorStr);
+        quicksort ((void*)arrayText, 0, rows - 1, sizeof (char*), comparatorStr);
 
-        printText (arrayTextTest, rows);
+        printText (arrayText, rows);
     }
 
-    printf ("%d\n", checkSortStr ((void**)arrayTextTest, rows));
+    printf ("%d\n", checkSortStr ((void**)arrayText, rows));
 
-    arrayFree (arrayTextTest, rows);
+    arrayFree (arrayText, rows);
     fclose (input);
 
     return 0;
 }
 
-int readFile (char *arrayText[], FILE* file, int *row)
+int readFile (char *arrayText[], FILE* file, size_t *row)
 {
+    MY_ASSERT (arrayText != nullptr, "pointer to arrayText is equal to nullptr");
+    MY_ASSERT (file != nullptr, "pointer to file is equal to nullptr");
+    MY_ASSERT (row != nullptr, "pointer to row is equal to nullptr");
+
     *row = 0;
     while (*row < MAXROW)
     {
@@ -60,6 +64,7 @@ int readFile (char *arrayText[], FILE* file, int *row)
         *(arrayText + *row) = strBuffer;
         //printf ("text: %s", *(arrayText + *row));
         (*row)++;
+        printf ("rows = %d\n", *row);
     }
 
     return (ferror (file)) ? 0 : EOF;
@@ -67,6 +72,9 @@ int readFile (char *arrayText[], FILE* file, int *row)
 
 void arrayFree (char *arrayText[], size_t arraySize)
 {
+    MY_ASSERT (arrayText != nullptr, "pointer to arrayText is equal to nullptr");
+    //printf ("rows = %d\n", arraySize);
+
     for (size_t i = 0; i < arraySize; i++)
         {
         if (arrayText[i])
@@ -76,16 +84,24 @@ void arrayFree (char *arrayText[], size_t arraySize)
 
 int comparatorStr (const void* v1, const void* v2)
 {
-    //printf ("%s%sstrCmp = %d\n", *(char* const*)v1, *(char* const*)v2, strcmpMy (*(char* const*)v1, *(char* const*)v2)); //if v1 or v2 = null -> return error code
+    MY_ASSERT (v1 != nullptr, "pointer to v1 is equal to nullptr");
+    MY_ASSERT (v2 != nullptr, "pointer to v2 is equal to nullptr");
+    //if v1 or v2 = null -> return error code
 
     return strcmpMy (*(char* const*)v1, *(char* const*)v2);
 }
 
 bool checkSortStr (void **array, int size)
 {
+    MY_ASSERT (array != nullptr, "pointer to array is equal to nullptr");
+
     for (int i = 0; i < size - 1; i++)
+    {
+        MY_ASSERT ((char**)array[i] != nullptr, "pointer to array[i] is equal to nullptr");
+
         if (strcmp ((char*)array[i], (char*)array[i + 1]) > 0)
             return false;
+    }
 
     return true;
 }
