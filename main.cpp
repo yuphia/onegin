@@ -5,11 +5,8 @@
 #include <cstring>
 
 const int MAXROWLENGTH = 100;
-const int MAXROW = 27000;
+const int MAXROW = 27000;//27000;
 
-
-
-void printText (char* text[], int rows);
 
 int readFile (char *arrayText[], FILE* file, int* rows);
 
@@ -17,7 +14,7 @@ void arrayFree (char *arrayText[], size_t arraySize);
 
 int comparatorStr (const void* v1, const void* v2);
 
-bool checkSort (void **array, int size);
+bool checkSortStr (void **array, int size);
 
 int main()
 {
@@ -25,7 +22,7 @@ int main()
     input = fopen ("input.txt", "rb");
 
     int rows = 0;
-    char *arrayTextTest [10/*MAXROW*/] = {0};
+    char *arrayTextTest [MAXROW] = {0};
 
     if (readFile (arrayTextTest, input, &rows) == 0)
         perror ("An error in function readFile");
@@ -40,7 +37,7 @@ int main()
         printText (arrayTextTest, rows);
     }
 
-    printf ("%d\n", checkSort ((void**)arrayTextTest, rows));
+    printf ("%d\n", checkSortStr ((void**)arrayTextTest, rows));
 
     arrayFree (arrayTextTest, rows);
     fclose (input);
@@ -51,7 +48,7 @@ int main()
 int readFile (char *arrayText[], FILE* file, int *row)
 {
     *row = 0;
-    while (*row < 10/*MAXROW*/)
+    while (*row < MAXROW)
     {
         size_t bufferSize = 25;
         char* strBuffer = (char*)calloc (bufferSize, sizeof(char));
@@ -68,12 +65,6 @@ int readFile (char *arrayText[], FILE* file, int *row)
     return (ferror (file)) ? 0 : EOF;
 }
 
-void printText (char* text[], int rows)
-{
-    for (int counter = 0; counter < rows;  counter++)
-        printf ("%s", text [counter]);
-}
-
 void arrayFree (char *arrayText[], size_t arraySize)
 {
     for (size_t i = 0; i < arraySize; i++)
@@ -85,15 +76,15 @@ void arrayFree (char *arrayText[], size_t arraySize)
 
 int comparatorStr (const void* v1, const void* v2)
 {
-    printf ("%s%s\n", *(char* const*)v1, *(char* const*)v2);
+    //printf ("%s%sstrCmp = %d\n", *(char* const*)v1, *(char* const*)v2, strcmpMy (*(char* const*)v1, *(char* const*)v2)); //if v1 or v2 = null -> return error code
 
     return strcmpMy (*(char* const*)v1, *(char* const*)v2);
 }
 
-bool checkSort (void **array, int size)
+bool checkSortStr (void **array, int size)
 {
-    for (int i = 0; i < size; i++)
-        if (strcmp ((char*)array[i], (char*)array[i + 1]) < 0)
+    for (int i = 0; i < size - 1; i++)
+        if (strcmp ((char*)array[i], (char*)array[i + 1]) > 0)
             return false;
 
     return true;

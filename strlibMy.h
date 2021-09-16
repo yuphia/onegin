@@ -1,9 +1,15 @@
 #pragma once
+
+#define $$$ printf ("line %d\n",  __LINE__);
+
+#define DEBUG_SOFT
+
 #include <stdio.h>
 #include <errno.h>
+#include "myAssert.h"
 
 int putsMy (char* str);
-int strcmpMy (char* str1, char* str2);
+int strcmpMy (const char* str1, const char* str2);
 size_t strlenMy (const char *str);
 
 char* strcpyMy (char* destStr, const char* srcStr);
@@ -17,12 +23,14 @@ size_t getlineMy (char **lineptr, size_t *maxSize, FILE* stream);
 
 int putsMy (char* str)
 {
+    MY_ASSERT (str != 0, "pointer to str equals NULL");
+
     size_t counter = 0;
     printf ("%d", str [counter]);
 
     while (str [counter] != '\0')
     {
-        printf ("%d", str [counter]);
+        //printf ("%d", str [counter]);
         putchar (str [counter]);
         counter++;
         printf ("123\n");
@@ -31,16 +39,24 @@ int putsMy (char* str)
     return (ferror (stdout)) ? EOF : 0;
 }
 
-int strcmpMy (char* str1, char* str2)
+int strcmpMy (const char* str1, const char* str2)
 {
-    while (*str1 == *str2 && *str1 != '\0')
-        str1++, str2++;
+    MY_ASSERT (str1 != 0, "pointer to str1 equals NULL");
+    MY_ASSERT (str2 != 0, "pointer to str2 equals NULL");
 
-    return *str1 - *str2;
+    while (*str1 == *str2 && *str1 != '\0')
+    {
+        //printf ("%d\n", ++testI);
+        str1++, str2++;
+    }
+
+    return (int)(unsigned char)*str1 - (int)(unsigned char)*str2;
 }
 
 size_t strlenMy (const char *str)
 {
+    MY_ASSERT (str != 0, "pointer to str equals NULL");
+
     int length = 0;
     for (; str [length] != '\0'; length++)
         ;
@@ -50,6 +66,8 @@ size_t strlenMy (const char *str)
 
 const char* strchrMy_c (const char *str, int symbol)
 {
+    MY_ASSERT (str != 0, "pointer to str equals NULL");
+
     for (; *str != '\0'; str++)
         if (*str == (char)symbol)
             return str;
@@ -59,6 +77,8 @@ const char* strchrMy_c (const char *str, int symbol)
 
 char* strchrMy (char *str, int symbol)
 {
+    MY_ASSERT (str != 0, "pointer to str equals NULL");
+
     for (; *str != '\0'; str++)
         if (*str == (char)symbol)
             return str;
@@ -71,6 +91,9 @@ char* strchrMy (char *str, int symbol)
 
 char* strcpyMy (char* destStr, const char* srcStr)
 {
+    MY_ASSERT (destStr != 0, "pointer to destStr equals NULL");
+    MY_ASSERT (srcStr != 0, "pointer to srcStr equals NULL");
+
     size_t i = 0;
     for (; srcStr [i] != '\0';  i++)
         destStr [i] = srcStr[i];
@@ -82,6 +105,9 @@ char* strcpyMy (char* destStr, const char* srcStr)
 
 char* strncpyMy (char* destStr, const char* srcStr, size_t amount)
 {
+    MY_ASSERT (destStr != 0, "pointer to destStr equals NULL");
+    MY_ASSERT (srcStr != 0, "pointer to srcStr equals NULL");
+
     if (destStr == nullptr || srcStr == nullptr)
     {
         errno = EINVAL;
@@ -106,6 +132,9 @@ char* strncpyMy (char* destStr, const char* srcStr, size_t amount)
 
 char *strcatMy (char *destStr, const char *srcStr)
 {
+    MY_ASSERT (destStr == 0, "pointer to destStr equals NULL");
+    MY_ASSERT (srcStr == 0, "pointer to srcStr equals NULL");
+
     int destStr_len = strlenMy (destStr);
     size_t i = 0;
 
@@ -118,6 +147,9 @@ char *strcatMy (char *destStr, const char *srcStr)
 
 char *strncatMy (char *destStr, const char *srcStr, size_t amount)
 {
+    MY_ASSERT (destStr == 0, "pointer to destStr equals NULL");
+    MY_ASSERT (srcStr == 0, "pointer to srcStr equals NULL");
+
     int destStr_len = strlenMy (destStr);
     size_t i = 0;
 
@@ -168,6 +200,8 @@ char *fgetsMy (char *str, int maxSize, FILE* stream)
 
 char* strdupMy (const char* srcStr)
 {
+    MY_ASSERT (srcStr == 0, "pointer to srcStr equals NULL");
+
     if (srcStr == NULL)
         return nullptr;
 
