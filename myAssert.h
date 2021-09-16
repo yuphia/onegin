@@ -15,31 +15,21 @@
 
 //#if defined(deff1) || defined(def2)
 
+#ifdef MY_ASSERT
+    #undef MY_ASSERT
+#endif
+
 #ifndef DEBUG_SOFT
     #ifndef NDEBUG
-        #ifndef MY_ASSERT
-
-            #define MY_ASSERT(statement, message) \
-                if (!(statement))\
-                {\
-                    printf ("\v" #message "\n\n");\
-                    printf ("An error has occured in file:" __FILE__ "\n\n"\
-                            "In Line: %d \n\n"\
-                            "While executing function: %s\n\n" , __LINE__, __PRETTY_FUNCTION__);\
-                    abort();\
-                }
-        #else
-            #undef MY_ASSERT
-            #define MY_ASSERT(statement, message) \
-                if (!(statement))\
-                {\
-                    printf ("\v" #message "\n\n");\
-                    printf ("An error has occured in file:" __FILE__ "\n\n"\
-                            "In Line: %d \n\n"\
-                            "While executing function: %s\n\n" , __LINE__, __PRETTY_FUNCTION__);\
-                    abort();\
-                }
-        #endif
+        #define MY_ASSERT(statement, message) \
+        if (!(statement))\
+        {\
+            printf ("\v" #message "\n\n");\
+            printf ("An error has occured in file:" __FILE__ "\n\n"\
+                    "In Line: %d \n\n"\
+                    "While executing function: %s\n\n" , __LINE__, __PRETTY_FUNCTION__);\
+            abort();\
+        }
     #endif
 #endif
 
