@@ -55,9 +55,17 @@ int strcmpMy (const char* str1, const char* str2)
 
 size_t strlenMy (const char *str)
 {
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
     MY_ASSERT (str != nullptr, "pointer to str equals nullptr");
 
     int length = 0;
+=======
+    size_t length = 0;
+>>>>>>> Stashed changes
+=======
+    size_t length = 0;
+>>>>>>> Stashed changes
     for (; str [length] != '\0'; length++)
         ;
 
@@ -178,16 +186,18 @@ char *fgetsMy (char *str, int maxSize, FILE* stream)
     int character = '\0';
     char* str0 = str;
 
+    printf ("%d, %ld", maxSize, str - str0);
+
     for (; str - str0 < maxSize; str++)
     {
-        //printf ("%d\n", i);
         character = getc (stream);
 
-        //putc (character, stdout);
+        putc (character, stdout);
 
         if (character == '\n' || character == EOF)
+        {
             break;
-
+        }
         *str = character;
     }
 
@@ -205,7 +215,7 @@ char* strdupMy (const char* srcStr)
     if (srcStr == NULL)
         return nullptr;
 
-    char* strCpy = (char*)malloc (sizeof srcStr);
+    char* strCpy = (char*)calloc (sizeof srcStr, sizeof (char));
 
     size_t i = 0;
     for (; srcStr [i] != '\0';  i++)
@@ -241,14 +251,30 @@ size_t getlineMy (char **lineptr, size_t *maxSize, FILE* stream)
     if (strStart != NULL)
         //printf ("memory created successfully\n");
 
+<<<<<<< Updated upstream
     char *currentElement = strStart;
 
+<<<<<<< Updated upstream
     char character = 0;
 
     for (;; currentElement++)
+=======
+    size_t i = 0;
+    char character = 0;
+
+    for (; i < (size_t)*maxSize; i++)
+>>>>>>> Stashed changes
+=======
+    size_t i = 0;
+    char character = 0;
+
+    for (; i < (size_t)*maxSize; i++)
+>>>>>>> Stashed changes
     {
         character = getc (stream);
 
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
         if (true)
         {
             //printf ("maxSize = %ld\n", *maxSize);
@@ -262,14 +288,42 @@ size_t getlineMy (char **lineptr, size_t *maxSize, FILE* stream)
 
         *currentElement = character;
 
+=======
+        printf ("%s\n", str);
+>>>>>>> Stashed changes
+=======
+        printf ("%s\n", str);
+>>>>>>> Stashed changes
         if (character == '\n' || character == EOF)
         {
             break;
+<<<<<<< Updated upstream
         }
+=======
+
+        if (currentBuffSize < sizeof (*(str + i)))
+        {
+            printf ("check\n");
+            str = (char*)realloc (str, currentBuffSize*currentBuffSize);
+        }
+
+<<<<<<< Updated upstream
+        *(str + i) = character;
+>>>>>>> Stashed changes
+=======
+        if (currentBuffSize < sizeof (*(str + i)))
+        {
+            printf ("check\n");
+            str = (char*)realloc (str, currentBuffSize*currentBuffSize);
+        }
+
+        *(str + i) = character;
+>>>>>>> Stashed changes
     }
 
     currentElement++;
 
+<<<<<<< Updated upstream
     if (currentElement > strEnd)
         currentElement = (char*)realloc (strStart, (size_t)(*maxSize)*2);
 
@@ -278,3 +332,14 @@ size_t getlineMy (char **lineptr, size_t *maxSize, FILE* stream)
     *lineptr = strStart;
     return sizeof (*lineptr);
 }        */
+=======
+    *lineptr = str;
+
+    *lineptr = str;
+
+    if (lineptr != NULL)
+        return sizeof *lineptr;
+
+    return sizeof str;
+}
+>>>>>>> Stashed changes
