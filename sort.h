@@ -15,7 +15,6 @@ static int partition(void *array, int left, int right, size_t elementSize, int (
 void quicksort(void *array, int start, int end, size_t elementSize, int (*comparator) (const void*, const void*));
 
 bool isSortedInt (int* array, size_t arraySize);
-static inline void swap (void *a, void *b, size_t size);
 
 int compareInt (const void* n1, const void* n2);
 int compareIntReverse (const void* n1, const void* n2);
@@ -82,11 +81,12 @@ static int partition(void *array, int left, int right, size_t elementSize, int (
                 swap (array + elementSize * left, array + elementSize * right, sizeof(elementSize));
         }
 
-        free (p_val);
+
 
         return right;
     }
 
+    free (p_val);
 
     return 0; // Later will improve to error code that means that we couldn't allocate memory
 }

@@ -55,17 +55,9 @@ int strcmpMy (const char* str1, const char* str2)
 
 size_t strlenMy (const char *str)
 {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     MY_ASSERT (str != nullptr, "pointer to str equals nullptr");
 
-    int length = 0;
-=======
     size_t length = 0;
->>>>>>> Stashed changes
-=======
-    size_t length = 0;
->>>>>>> Stashed changes
     for (; str [length] != '\0'; length++)
         ;
 
@@ -331,7 +323,7 @@ size_t getlineMy (char **lineptr, size_t *maxSize, FILE* stream)
 
     *lineptr = strStart;
     return sizeof (*lineptr);
-}        */
+}
 =======
     *lineptr = str;
 
@@ -342,4 +334,4 @@ size_t getlineMy (char **lineptr, size_t *maxSize, FILE* stream)
 
     return sizeof str;
 }
->>>>>>> Stashed changes
+>>>>>>> Stashed changes*/
