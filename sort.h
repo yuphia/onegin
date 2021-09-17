@@ -57,32 +57,32 @@ static int partition(void *array, int left, int right, size_t elementSize, int (
 
     if (p_val != nullptr)
     {
-        memcpy (p_val, array + elementSize * pivot, elementSize);
+        memcpy (p_val, (uc*)array + elementSize * pivot, elementSize);
 
         if (right - left > 1)
         {
             while (left < right)
             {
-                while (comparator (array + elementSize * left, p_val) <= 0/*array[left] <= p_val*/)
+                while (comparator ((uc*)array + elementSize * left, p_val) <= 0/*array[left] <= p_val*/)
                     left++;
 
-                while (comparator (array + elementSize * right, p_val) > 0/*array[right] > p_val)*/)
+                while (comparator ((uc*)array + elementSize * right, p_val) > 0/*array[right] > p_val)*/)
                     right--;
 
                 if (left < right)
-                    swap (array + elementSize * left, array + elementSize * right, sizeof(elementSize));
+                    swap ((uc*)array + elementSize * left, (uc*)array + elementSize * right, sizeof(elementSize));
             }
 
-            swap (array + elementSize * pivot, array + elementSize * right, sizeof(elementSize));
+            swap ((uc*)array + elementSize * pivot, (uc*)array + elementSize * right, sizeof(elementSize));
         }
         else if (left < right)
         {
-            if (comparator (array + elementSize * left, array + elementSize * right) > 0)
-                swap (array + elementSize * left, array + elementSize * right, sizeof(elementSize));
+            if (comparator ((uc*)array + elementSize * left, (uc*)array + elementSize * right) > 0)
+                swap ((uc*)array + elementSize * left, (uc*)array + elementSize * right, sizeof(elementSize));
         }
 
 
-
+        free (p_val);
         return right;
     }
 
@@ -153,7 +153,7 @@ void printText (char* text[], size_t rows)
 {
     MY_ASSERT (text != nullptr, "pointer to text is equal to nullptr");
 
-    for (int counter = 0; counter < rows;  counter++)
+    for (size_t counter = 0; counter < rows;  counter++)
     {
         MY_ASSERT (text[counter] != nullptr, "pointer to text[counter] is equal to nullptr");
 
