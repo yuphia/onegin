@@ -59,21 +59,24 @@ int readFile (char *arrayText[], FILE* file, size_t *row)
         getline (&strBuffer, &bufferSize, file);
 
         if (feof (file))
+        {
+            free (strBuffer);
             break;
+        }
 
         *(arrayText + *row) = strBuffer;
         //printf ("text: %s", *(arrayText + *row));
         (*row)++;
-        printf ("rows = %d\n", *row);
+        printf ("rows = %ld\n", *row);
     }
-
+    //(*row)++;
     return (ferror (file)) ? 0 : EOF;
 }
 
 void arrayFree (char *arrayText[], size_t arraySize)
 {
     MY_ASSERT (arrayText != nullptr, "pointer to arrayText is equal to nullptr");
-    //printf ("rows = %d\n", arraySize);
+    printf ("rows = %ld\n", arraySize);
 
     for (size_t i = 0; i < arraySize; i++)
         {
