@@ -91,7 +91,7 @@ char* strncpyMy (char* destStr, const char* srcStr, size_t amount)
     if (destStr == nullptr || srcStr == nullptr)
     {
         errno = EINVAL;
-        return (char*)-1;
+        return destStr;
     }
 
     size_t i = 0;
