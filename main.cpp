@@ -21,25 +21,29 @@ int main()
     FILE *input = nullptr;
     input = fopen ("input.txt", "rb");
 
-    size_t rows = 0;
-    char *arrayText [MAXROW] = {0};
-
-    if (readFile (arrayText, input, &rows) == 0)
-        perror ("An error in function readFile");
-    else
+    if (input != nullptr)
     {
-        printText (arrayText, rows);
-        printf ("\n");
+        size_t rows = 0;
+        char *arrayText [MAXROW] = {0};
 
-        //qsort ((void*)arrayTextTest, rows, sizeof (char*), comparatorStr);
-        quicksort ((void*)arrayText, 0, rows - 1, sizeof (char*), comparatorStr);
+        if (readFile (arrayText, input, &rows) == 0)
+            perror ("An error in function readFile");
+        else
+        {
+            printText (arrayText, rows);
+            printf ("\n");
 
-        printText (arrayText, rows);
+            //qsort ((void*)arrayTextTest, rows, sizeof (char*), comparatorStr);
+            quicksort ((void*)arrayText, 0, rows - 1, sizeof (char*), comparatorStr);
+
+            printText (arrayText, rows);
+        }
+
+        printf ("%d\n", checkSortStr ((void**)arrayText, rows));
+
+        arrayFree (arrayText, rows);
+
     }
-
-    printf ("%d\n", checkSortStr ((void**)arrayText, rows));
-
-    arrayFree (arrayText, rows);
     fclose (input);
 
     return 0;
