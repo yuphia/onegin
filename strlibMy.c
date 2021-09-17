@@ -189,13 +189,15 @@ char* strdupMy (const char* srcStr)
 
     char* strCpy = (char*)calloc (sizeof srcStr, sizeof (char));
 
-    size_t i = 0;
-    for (; srcStr [i] != '\0';  i++)
-        strCpy [i] = srcStr[i];
+    if (strCpy != nullptr)
+    {
+        size_t i = 0;
+        for (; srcStr [i] != '\0';  i++)
+            strCpy [i] = srcStr[i];
 
-    ++i;
-    strCpy [i] = srcStr [i];
-
+        ++i;
+        strCpy [i] = srcStr [i];
+    }
 
     return strCpy;
 }
