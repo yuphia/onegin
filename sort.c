@@ -37,7 +37,9 @@ int partition(void *array, int left, int right, size_t elementSize, int (*compar
     //char* p_val = *(char**)(array + elementSize * pivot);
     void* p_val = calloc (1, elementSize); // if p_va; l == NULL Couldn't allocate memory
 
-    if (p_val != nullptr)
+    if (p_val == nullptr)
+        return 0;
+    else
     {
         memcpy (p_val, (uc*)array + elementSize * pivot, elementSize);
 
