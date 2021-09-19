@@ -3,12 +3,13 @@
 #include "StrFuncs/strlibMy.h"
 #include "SortingAlg/sort.h"
 #include <cstring>
+#include "fileInputTreatment.h"
 
 const int MAXROWLENGTH = 100;
 const int MAXROW = 27000;//27000;
 
 
-int readFile (char *arrayText[], FILE* file, size_t* rows);
+int readFile (char *textArray[], FILE* file, size_t *row);
 
 void arrayFree (char *arrayText[], size_t arraySize);
 
@@ -28,40 +29,33 @@ int main(int argc, char* argv[])
 
     if (inputFile != nullptr)
     {
-        size_t rows = 0;
-        char *arrayText [MAXROW] = {0};
-
-        if (readFile (arrayText, inputFile, &rows) == 0)
-            perror ("An error in function readFile");
-        else
+        //size_t rows = 0;
+        
+       
+        outputFile = fopen (argv[2], "wb");
+        if (outputFile == nullptr)
         {
-            outputFile = fopen (argv[2], "wb");
-            if (outputFile == nullptr)
-            {
-                arrayFree (arrayText, rows);
-                return 0;
-            }    
-
-            printText (arrayText, rows, outputFile);
-            printf ("\n");
-
-            //qsort ((void*)arrayTextTest, rows, sizeof (char*), comparatorStr);
-            qsortMy ((void*)arrayText, rows - 1, sizeof (char*), comparatorStr);
-
-            printText (arrayText, rows, outputFile);
-            
-            fclose (inputFile);
-            fclose (outputFile);
+            return 0;
         }
 
-        printf ("%d\n", checkSortStr ((void**)arrayText, rows));
+        struct Text text = {};
+        transitFileToText (inputFile, &text);
 
-        arrayFree (arrayText, rows);
+        
+            //qsort ((void*)arrayTextTest, rows, sizeof (char*), comparatorStr);
+        //qsortMy ((void*)arrayText, rows - 1, sizeof (char*), comparatorStr);
+
+        fclose (inputFile);
+        fclose (outputFile);
+       
+        printTextStruct (&text, stdout);
+
+        free (text.textArray);
     }
-    
 
     return 0;
 }
+
 
 int readFile (char *arrayText[], FILE* file, size_t *row)
 {
@@ -86,10 +80,11 @@ int readFile (char *arrayText[], FILE* file, size_t *row)
         //printf ("text: %s", *(arrayText + *row));
         (*row)++;
         printf ("rows = %ld\n", *row);
-    }    
+    }
     //(*row)++;
     return (ferror (file)) ? 0 : EOF;
 }
+
 
 void arrayFree (char *arrayText[], size_t arraySize)
 {
@@ -126,9 +121,6 @@ bool checkSortStr (void **array, int size)
 
     return true;
 }
-
-
-
 
 
 
