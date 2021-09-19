@@ -19,6 +19,8 @@ bool checkSortStr (void **array, int size);
 int main()
 {
     FILE *input = nullptr;
+    FILE *outputFile = nullptr;
+
     input = fopen ("input.txt", "rb");
 
     if (input != nullptr)
@@ -30,21 +32,29 @@ int main()
             perror ("An error in function readFile");
         else
         {
-            printText (arrayText, rows);
+            outputFile = fopen ("output.txt", "wb");
+            if (outputFile == nullptr)
+            {
+                arrayFree (arrayText, rows);
+                return 0;
+            }    
+
+            printText (arrayText, rows, outputFile);
             printf ("\n");
 
-            //qsort ((void*)arrayTextTest, rows, sizeof (char*), comparatorStr);
+                //qsort ((void*)arrayTextTest, rows, sizeof (char*), comparatorStr);
             quicksort ((void*)arrayText, 0, rows - 1, sizeof (char*), comparatorStr);
 
-            printText (arrayText, rows);
+            printText (arrayText, rows, outputFile);
+            
+            fclose (outputFile);
         }
 
         printf ("%d\n", checkSortStr ((void**)arrayText, rows));
 
         arrayFree (arrayText, rows);
-
     }
-    fclose (input);
+    
 
     return 0;
 }
@@ -73,6 +83,7 @@ int readFile (char *arrayText[], FILE* file, size_t *row)
         (*row)++;
         printf ("rows = %ld\n", *row);
     }
+    fclose (file);
     //(*row)++;
     return (ferror (file)) ? 0 : EOF;
 }
