@@ -89,7 +89,10 @@ void quicksort(void *array, int start, int end, size_t elementSize, int (*compar
     }
 }
 
-
+void qsortMy (void *array, size_t nmemb, size_t elementSize, int (*comparator) (const void*, const void*))
+{
+    quicksort (array, 0, nmemb, elementSize, comparator);
+}
 
 bool isSortedInt (int* array, size_t arraySize)
 {

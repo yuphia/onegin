@@ -42,8 +42,8 @@ int main(int argc, char* argv[])
             printText (arrayText, rows, outputFile);
             printf ("\n");
 
-                //qsort ((void*)arrayTextTest, rows, sizeof (char*), comparatorStr);
-            quicksort ((void*)arrayText, 0, rows - 1, sizeof (char*), comparatorStr);
+            //qsort ((void*)arrayTextTest, rows, sizeof (char*), comparatorStr);
+            qsortMy ((void*)arrayText, rows - 1, sizeof (char*), comparatorStr);
 
             printText (arrayText, rows, outputFile);
             
