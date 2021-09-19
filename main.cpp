@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "strlibMy.h"
-#include "sort.h"
+#include "SortingAlg/sort.h"
 #include <cstring>
 
 const int MAXROWLENGTH = 100;
@@ -20,6 +20,9 @@ int main(int argc, char* argv[])
 {
     FILE *inputFile = nullptr;
     FILE *outputFile = nullptr;
+
+    if (argc != 3)
+        return 0;
 
     inputFile = fopen (argv[1], "rb");
 

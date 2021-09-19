@@ -1,4 +1,4 @@
-#include "sort.h"
+#include "SortingAlg/sort.h"
 #include "myAssert.h"
 
 inline void swap (void *a, void *b, size_t size)
@@ -17,7 +17,7 @@ inline void swap (void *a, void *b, size_t size)
 }
 
 // Formatted printing of integer massive
-static void dump_list(const char *tag, int *ptr, int left, int right)
+void dump_list(const char *tag, int *ptr, int left, int right)
 {
     MY_ASSERT (tag != nullptr, "pointer to tag is equal to nullptr");
     MY_ASSERT (ptr != nullptr, "pointer to ptr is equal to nullptr");
