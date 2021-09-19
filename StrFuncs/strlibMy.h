@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 #include <errno.h>
-#include "myAssert.h"
+#include "../MistakeHandling/myAssert.h"
 
 int putsMy (char* str);
 int strcmpMy (const char* str1, const char* str2);

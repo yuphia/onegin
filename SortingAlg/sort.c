@@ -1,5 +1,5 @@
-#include "SortingAlg/sort.h"
-#include "myAssert.h"
+#include "sort.h"
+#include "../MistakeHandling/myAssert.h"
 
 inline void swap (void *a, void *b, size_t size)
 {

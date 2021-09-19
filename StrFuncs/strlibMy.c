@@ -1,5 +1,4 @@
 #include "strlibMy.h"
-#include "myAssert.h"
 
 int putsMy (char* str)
 {

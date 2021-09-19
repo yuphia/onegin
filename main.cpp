@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <iostream>
-#include "strlibMy.h"
+#include "StrFuncs/strlibMy.h"
 #include "SortingAlg/sort.h"
 #include <cstring>
 
