@@ -133,15 +133,4 @@ int compareDouble (const void* n1, const void* n2)
 }
 
 
-void printText (char* text[], size_t rows, FILE* outputFile)
-{
-    MY_ASSERT (text != nullptr, "pointer to text is equal to nullptr");
-
-    for (size_t counter = 0; counter < rows;  counter++)
-    {
-        MY_ASSERT (text[counter] != nullptr, "pointer to text[counter] is equal to nullptr");
-
-        fprintf (outputFile, "%s", text [counter]);
-    }
-}
 

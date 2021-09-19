@@ -16,23 +16,23 @@ int comparatorStr (const void* v1, const void* v2);
 
 bool checkSortStr (void **array, int size);
 
-int main()
+int main(int argc, char* argv[])
 {
-    FILE *input = nullptr;
+    FILE *inputFile = nullptr;
     FILE *outputFile = nullptr;
 
-    input = fopen ("input.txt", "rb");
+    inputFile = fopen (argv[1], "rb");
 
-    if (input != nullptr)
+    if (inputFile != nullptr)
     {
         size_t rows = 0;
         char *arrayText [MAXROW] = {0};
 
-        if (readFile (arrayText, input, &rows) == 0)
+        if (readFile (arrayText, inputFile, &rows) == 0)
             perror ("An error in function readFile");
         else
         {
-            outputFile = fopen ("output.txt", "wb");
+            outputFile = fopen (argv[2], "wb");
             if (outputFile == nullptr)
             {
                 arrayFree (arrayText, rows);
@@ -47,6 +47,7 @@ int main()
 
             printText (arrayText, rows, outputFile);
             
+            fclose (inputFile);
             fclose (outputFile);
         }
 
@@ -82,8 +83,7 @@ int readFile (char *arrayText[], FILE* file, size_t *row)
         //printf ("text: %s", *(arrayText + *row));
         (*row)++;
         printf ("rows = %ld\n", *row);
-    }
-    fclose (file);
+    }    
     //(*row)++;
     return (ferror (file)) ? 0 : EOF;
 }

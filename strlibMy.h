@@ -21,3 +21,4 @@ const char* strchrMy_c (const char *str, int symbol);
 char *fgetsMy (char *str, int maxSize, FILE* stream);
 size_t getlineMy (char **lineptr, size_t *maxSize, FILE* stream);
 
+void printText (char* text[], size_t rows, FILE* outputFile);
