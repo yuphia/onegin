@@ -13,6 +13,7 @@ void printText (char* text[], size_t rows);
 
 int partition(void *array, int left, int right, size_t elementSize, int (*comparator) (const void*, const void*));
 void quicksort(void *array, int start, int end, size_t elementSize, int (*comparator) (const void*, const void*));
+void qsortMy (void *array, size_t nmemb, size_t elementSize, int (*comparator) (const void*, const void*));
 
 bool isSortedInt (int* array, size_t arraySize);
 
