@@ -22,6 +22,8 @@ void fillText (FILE* inputFile, struct Text* text);
 size_t countLines (char* text);
 struct Line* transitTextToLineArray (size_t lineAmount, char* text, struct Line* arrayOfStrings);
 void printTextStruct (struct Text* text, FILE* fileOut);
+void freeArrayLines (struct Line* lines);
+
 
 size_t getFileSize (FILE* inputFile)
 {
@@ -50,7 +52,7 @@ void transitFileToText (FILE* inputFile, struct Text* text)
     text ->  textSize = getFileSize (inputFile);
     text -> textArray = (char*)calloc (text -> textSize + 1, sizeof(char));
 
-    if (&(text -> textArray) == nullptr)
+    if ((text -> textArray) == nullptr)
         return;
 
     fillText (inputFile, text);
@@ -88,7 +90,7 @@ struct Line* transitTextToLineArray (size_t lineAmount, char* text, struct Line*
     MY_ASSERT (text != nullptr, "Pointer to text = nullptr"); 
     MY_ASSERT (text != nullptr, "Pointer to an array of structs Line = nullptr");   
 
-    arrayOfStrings = (struct Line*) calloc (lineAmount, sizeof(struct Line)); //free
+    arrayOfStrings = (struct Line*) calloc (lineAmount + 1, sizeof(struct Line)); //free
     
     char* endOfLine = text;
     char* startOfLine = text;
@@ -129,7 +131,10 @@ void printTextStruct (struct Text* text, FILE* fileOut)
     }    
 }
 
-
+void freeArrayLines (struct Line* lines)
+{
+    free (lines);
+}
 
 
 
