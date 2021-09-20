@@ -27,31 +27,33 @@ int main(int argc, char* argv[])
 
     inputFile = fopen (argv[1], "rb");
 
-    if (inputFile != nullptr)
+    if (inputFile == nullptr)
     {
-        //size_t rows = 0;
+        return 0;
+    }   
+    outputFile = fopen (argv[2], "wb");
+    if (outputFile == nullptr)
+    {
+        return 0;
+    }
+
+    struct Text text = {};
+    transitFileToText (inputFile, &text);
         
-       
-        outputFile = fopen (argv[2], "wb");
-        if (outputFile == nullptr)
-        {
-            return 0;
-        }
-
-        struct Text text = {};
-        transitFileToText (inputFile, &text);
-
+    struct Line arrayOfStrings;
+    transitTextToLineArray (text.textSize, text.textArray, &arrayOfStrings);
         
             //qsort ((void*)arrayTextTest, rows, sizeof (char*), comparatorStr);
         //qsortMy ((void*)arrayText, rows - 1, sizeof (char*), comparatorStr);
-
-        fclose (inputFile);
-        fclose (outputFile);
+//////////////////////////////////////////// CREATE QSORT ANALOG FOR STRUCT AND ADD line 
+//TREATMENT
+    fclose (inputFile);
+    fclose (outputFile);
        
-        printTextStruct (&text, stdout);
+    printTextStruct (&text, stdout);
 
-        free (text.textArray);
-    }
+    free (text.textArray);
+    freeArrayLines (&arrayOfStrings);
 
     return 0;
 }
