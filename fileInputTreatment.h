@@ -123,12 +123,9 @@ struct Line* transitTextToLineArray (size_t lineAmount, char* text, struct Line*
 void printTextStruct (struct Text* text, FILE* fileOut)
 {
     MY_ASSERT (text != nullptr, "Pointer to text = nullptr");
-    MY_ASSERT (fileOut != nullptr, "Pointer to output file = nullptr");
+    MY_ASSERT (fileOut != nullptr, "Pointer to output file = nullpt");
 
-    for (size_t i = 0; i < (text -> textSize); i++)
-    {
-        fputc (text -> textArray[i], fileOut);
-    }    
+    fwrite (text -> textArray, text -> textSize, sizeof(char), fileOut);    
 }
 
 void freeArrayLines (struct Line* lines)
