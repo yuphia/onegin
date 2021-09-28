@@ -2,8 +2,9 @@
 #include <iostream>
 #include "StrFuncs/strlibMy.h"
 #include "SortingAlg/sort.h"
+#include "fileInput/fileInputTreatment.h"
+#include "fileInput/fileInputTreatment.h" 
 #include <cstring>
-#include "fileInputTreatment.h"
 
 const int MAXROWLENGTH = 100;
 const int MAXROW = 27000;//27000;
@@ -12,8 +13,6 @@ const int MAXROW = 27000;//27000;
 int readFile (char *textArray[], FILE* file, size_t *row);
 
 void arrayFree (char *arrayText[], size_t arraySize);
-
-int comparatorStr (const void* v1, const void* v2);
 
 bool checkSortStr (void **array, int size);
 
@@ -30,30 +29,30 @@ int main(int argc, char* argv[])
     if (inputFile == nullptr)
     {
         return 0;
-    }   
+    }
+
     outputFile = fopen (argv[2], "wb");
+
     if (outputFile == nullptr)
     {
         return 0;
     }
 
     struct Text text = {};
-    transitFileToText (inputFile, &text);
-        
-    struct Line arrayOfStrings;
-    transitTextToLineArray (text.textSize, text.textArray, &arrayOfStrings);
-        
-            //qsort ((void*)arrayTextTest, rows, sizeof (char*), comparatorStr);
-        //qsortMy ((void*)arrayText, rows - 1, sizeof (char*), comparatorStr);
-//////////////////////////////////////////// CREATE QSORT ANALOG FOR STRUCT AND ADD line 
+
+    transitFileToLineArray (inputFile, &text);
+    printLinesArray (&text);
+    //qsort ((void*)text.lines, text.nLines, sizeof (struct Line*), compareLineStruct);
+    //qsortMy ((void*)(text -> arrayText), rows - 1, sizeof (char*), comparatorStr);
+//////////////////////////////////////////// CREATE QSORT ANALOG FOR STRUCT AND ADD line
 //TREATMENT
     fclose (inputFile);
     fclose (outputFile);
-       
-    printTextStruct (&text, stdout);
 
     free (text.textArray);
-    freeArrayLines (&arrayOfStrings);
+
+    printf ("reached arrayLines free func\n");
+    freeArrayLines (text.lines);
 
     return 0;
 }
@@ -100,14 +99,6 @@ void arrayFree (char *arrayText[], size_t arraySize)
         }
 }
 
-int comparatorStr (const void* v1, const void* v2)
-{
-    MY_ASSERT (v1 != nullptr, "pointer to v1 is equal to nullptr");
-    MY_ASSERT (v2 != nullptr, "pointer to v2 is equal to nullptr");
-    //if v1 or v2 = null -> return error code
-
-    return strcmpMy (*(char* const*)v1, *(char* const*)v2);
-}
 
 bool checkSortStr (void **array, int size)
 {
