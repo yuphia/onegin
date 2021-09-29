@@ -41,17 +41,20 @@ int main(int argc, char* argv[])
     struct Text text = {};
 
     transitFileToLineArray (inputFile, &text);
-    printLinesArray (&text);
-    //qsort ((void*)text.lines, text.nLines, sizeof (struct Line*), compareLineStruct);
+
+    printf ("total lines = %ld", text.nLines);
+
+    qsortMy ((void*)text.lines, text.nLines, sizeof (struct Line), compareLineStruct);
     //qsortMy ((void*)(text -> arrayText), rows - 1, sizeof (char*), comparatorStr);
 //////////////////////////////////////////// CREATE QSORT ANALOG FOR STRUCT AND ADD line
 //TREATMENT
     fclose (inputFile);
     fclose (outputFile);
+    
+    printLinesArray (&text);
 
     free (text.textArray);
 
-    printf ("reached arrayLines free func\n");
     freeArrayLines (text.lines);
 
     return 0;
