@@ -43,7 +43,7 @@ int partition(void *array, int left, int right, size_t elementSize, int (*compar
     else
     {
         memcpy (p_val, (uc*)array + elementSize * pivot, elementSize);
-        
+
         if (right - left > 1)
         {
             while (left < right)
@@ -51,11 +51,11 @@ int partition(void *array, int left, int right, size_t elementSize, int (*compar
                 //printf ("loop, left = %d, right = %d\n", left, right);
                 while (comparator ((uc*)array + elementSize * left, p_val) <= 0/*array[left] <= p_val*/)
                     left++;
-                printf ("%s\nlineSize = %ld \n%d, %d\n", ((struct Line*)((uc*)array + elementSize * right)) -> line, ((struct Line*)((const void*)((uc*)array + elementSize * right))) -> lineSize, left, right);
+                printf ("\n%s\nlineSize = %ld \n%d, %d\n\n", ((struct Line*)((uc*)array + elementSize * right)) -> line, ((struct Line*)((const void*)((uc*)array + elementSize * right))) -> lineSize, left, right);
                 $$$
                 while (comparator ((const void*)((uc*)array + elementSize * right), p_val) > 0/*array[right] > p_val)*/)
                     right--;
-                printf ("BEBRA %s\nlineSize = %ld \n%d, %d\n", ((struct Line*)((uc*)array + elementSize * right)) -> line, ((struct Line*)((const void*)((uc*)array + elementSize * right))) -> lineSize, left, right);
+                printf ("\nBEBRA %s\nlineSize = %ld \n%d, %d\n\n", ((struct Line*)((uc*)array + elementSize * right)) -> line, ((struct Line*)((const void*)((uc*)array + elementSize * right))) -> lineSize, left, right);
 
                 if (left < right)
                     swap ((uc*)array + elementSize * left, (uc*)array + elementSize * right, sizeof(elementSize));
@@ -74,7 +74,7 @@ int partition(void *array, int left, int right, size_t elementSize, int (*compar
     }
 
     free (p_val);
-    
+
     return 0; // Later will improve to error code that means that we couldn't allocate memory
 }
 
@@ -137,52 +137,67 @@ int compareDouble (const void* n1, const void* n2)
 }
 
 int compareLineStruct (const void* n1, const void* n2)
-{
-    char* first_var_start     = ((struct Line*) n1)->line;
-    char* first_var_ne_start  = ((struct Line*) n1)->line + ((struct Line*) n1)->lineSize;
-    char* second_var_start    = ((struct Line*) n2)->line;
-    char* second_var_ne_start = ((struct Line*) n2)->line + ((struct Line*) n2)->lineSize;
-    
+{                                 //n2LineStart
+    char* n1LineStart     = ((struct Line*) n1)->line;
+    char* n1LineEnd  = ((struct Line*) n1)->line + ((struct Line*) n1)->lineSize;
+    char* n2LineStart    = ((struct Line*) n2)->line;
+    char* n2LineEnd = ((struct Line*) n2)->line + ((struct Line*) n2)->lineSize;
+
     printf ("left size  = %ld\n"
             "right size = %ld\n",
             ((struct Line*)n1) -> lineSize,
             ((struct Line*)n2) -> lineSize);
 
     printf ("line left  = %s\n"
-            "line right = %s\n", 
-            first_var_start, second_var_start);
+            "line right = %s\n",
+            n1LineStart, n2LineStart);
 
-    while (isalnum(*first_var_start ) == 0 && *first_var_start != '\0')   first_var_start++;
-    while (isalnum(*second_var_start) == 0 && *second_var_start != '\0') second_var_start++;
-   
-    while (first_var_start != first_var_ne_start && second_var_start != second_var_ne_start && *first_var_start == *second_var_start)
+    while (isalnum(*n1LineStart ) == 0 && *n1LineStart != '\0')   n1LineStart++;
+    while (isalnum(*n2LineStart) == 0 && *n2LineStart != '\0') n2LineStart++;
+
+    while (n1LineStart != n1LineEnd && n2LineStart != n2LineEnd && *n1LineStart == *n2LineStart)
     {
-        first_var_start++;
-        second_var_start++;
+        n1LineStart++;
+        n2LineStart++;
 
-        while (isalnum((int)(unsigned char)*first_var_start ) == 0 && first_var_start != first_var_ne_start) first_var_start++;
-        while (isalnum((int)(unsigned char)*second_var_start) == 0 && second_var_start != second_var_ne_start) second_var_start++;
+        while (isalnum((int)(unsigned char)*n1LineStart ) == 0 && n1LineStart != n1LineEnd) n1LineStart++;
+        while (isalnum((int)(unsigned char)*n2LineStart) == 0 && n2LineStart != n2LineEnd) n2LineStart++;
     }
 
     printf ("line left  = %s\n"
-            "line right = %s\n", 
-            first_var_start, second_var_start);
+            "line right = %s\n",
+            n1LineStart, n2LineStart);
 
-    printf ("%d\n", ((int)(*first_var_start) - (int)(*second_var_start)));
+    printf ("%d\n", ((int)(*n1LineStart) - (int)(*n2LineStart)));
 
-    return ((int)(unsigned char)(*first_var_start) - (int)(unsigned char)(*second_var_start));
+    return ((int)(unsigned char)(*n1LineStart) - (int)(unsigned char)(*n2LineStart));
 }
-/*{
-    MY_ASSERT (n1 != nullptr, "pointer to n1 is equal to nullptr");
-    MY_ASSERT (n2 != nullptr, "pointer to n2 is equal to nullptr");
 
-    char* line1 = ((struct Line*)n1) -> line;
-    char* line2 = ((struct Line*)n2) -> line;
+int compareLineStructEnd (const void *n1, const void *n2)
+{
+    char* n1LineStart     = ((struct Line*) n1) -> line + ((struct Line*) n1) -> lineSize - 1;
+    char* n1LineEnd  = ((struct Line*) n1) -> line;
+    char* n2LineStart    = ((struct Line*) n2) -> line + ((struct Line*) n2)-> lineSize - 1;
+    char* n2LineEnd = ((struct Line*) n2) -> line;
 
-    printf ("%s\n %s\n", line1, line2);
+    while (isalnum((int)(unsigned char)*n1LineStart ) == 0 && *n1LineStart != '\0')
+        n1LineStart--;
+    while (isalnum((int)(unsigned char)*n2LineStart) == 0 && *n2LineStart != '\0')
+        n2LineStart--;
 
-    return compareStr (line1, line2);
-}                                                              */
+    while (*n1LineStart == *n2LineStart && n2LineStart != n2LineEnd && n1LineStart != n1LineEnd)
+    {
+        n1LineStart--;
+        n2LineStart--;
+
+        while (isalnum((int)(unsigned char)*n1LineStart ) == 0 && n1LineStart != n1LineEnd && *n1LineStart != '\0')
+            n1LineStart--;
+        while (isalnum((int)(unsigned char)*n2LineStart) == 0 && n2LineStart != n2LineEnd && *n2LineStart != '\0')
+            n2LineStart--;
+    }
+
+    return ((int)(unsigned char)(*n1LineStart) - (int)(unsigned char)(*n2LineStart));
+}
 
 int compareStr (const void* v1, const void* v2)
 {

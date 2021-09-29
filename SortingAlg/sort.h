@@ -20,4 +20,5 @@ bool isSortedInt (int* array, size_t arraySize);
 int compareInt (const void* n1, const void* n2);
 int compareIntReverse (const void* n1, const void* n2);
 int compareLineStruct (const void* n1, const void* n2);
+int compareLineStructEnd (const void* n1, const void* n2);
 int compareStr (const void* v1, const void* v2);

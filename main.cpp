@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
 
     printf ("total lines = %ld", text.nLines);
 
-    qsortMy ((void*)text.lines, text.nLines, sizeof (struct Line), compareLineStruct);
+    qsort ((void*)text.lines, text.nLines, sizeof (struct Line), compareLineStructEnd);
     //qsortMy ((void*)(text -> arrayText), rows - 1, sizeof (char*), comparatorStr);
 //////////////////////////////////////////// CREATE QSORT ANALOG FOR STRUCT AND ADD line
 //TREATMENT
