@@ -51,7 +51,7 @@ int partition(void *array, int left, int right, size_t elementSize, int (*compar
                 //printf ("loop, left = %d, right = %d\n", left, right);
                 while (comparator ((uc*)array + elementSize * left, p_val) <= 0/*array[left] <= p_val*/)
                     left++;
-                printf ("%s\nlineSize = %ld \n%d, %d\n", ((struct Line*)((uc*)array + elementSize * right)) -> line, (struct Line*)((const void*)((uc*)array + elementSize * right))) -> lineSize, left, right);
+                printf ("%s\nlineSize = %ld \n%d, %d\n", ((struct Line*)((uc*)array + elementSize * right)) -> line, ((struct Line*)((const void*)((uc*)array + elementSize * right))) -> lineSize, left, right);
                 $$$
                 while (comparator ((const void*)((uc*)array + elementSize * right), p_val) > 0/*array[right] > p_val)*/)
                     right--;
