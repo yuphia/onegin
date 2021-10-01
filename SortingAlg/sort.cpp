@@ -181,7 +181,10 @@ int compareLineStruct (const void* n1, const void* n2)
 
     printf ("%d\n", ((int)(*n1LineStart) - (int)(*n2LineStart)));
 
-    return ((int)(unsigned char)(*n1LineStart) - (int)(unsigned char)(*n2LineStart));
+ 
+    int n1val = tolower ((int)(unsigned char)(*n1LineStart));
+    int n2val = tolower ((int)(unsigned char)(*n2LineStart));
+    return (n1val- n2val);
 }
 
 int compareLineStructEnd (const void *n1, const void *n2)
@@ -222,7 +225,9 @@ int compareLineStructEnd (const void *n1, const void *n2)
     if (n1LineStart <= n1LineEnd) return -1;
     if (n2LineStart <= n2LineEnd) return  1;
 
-    return ((int)(unsigned char)(*n1LineStart) - (int)(unsigned char)(*n2LineStart));
+    int n1val = tolower ((int)(unsigned char)(*n1LineStart));
+    int n2val = tolower ((int)(unsigned char)(*n2LineStart));
+    return (n1val- n2val);
 }
 
 int compareStr (const void* v1, const void* v2)
