@@ -9,9 +9,6 @@
 const int MAXROWLENGTH = 100;
 const int MAXROW = 27000;//27000;
 
-
-int readFile (char *textArray[], FILE* file, size_t *row);
-
 void arrayFree (char *arrayText[], size_t arraySize);
 
 bool checkSortStr (void **array, int size);
@@ -58,35 +55,6 @@ int main(int argc, char* argv[])
     freeArrayLines (text.lines);
 
     return 0;
-}
-
-
-int readFile (char *arrayText[], FILE* file, size_t *row)
-{
-    MY_ASSERT (arrayText != nullptr, "pointer to arrayText is equal to nullptr");
-    MY_ASSERT (file != nullptr, "pointer to file is equal to nullptr");
-    MY_ASSERT (row != nullptr, "pointer to row is equal to nullptr");
-
-    *row = 0;
-    while (*row < MAXROW)
-    {
-        size_t bufferSize = 25;
-        char* strBuffer = (char*)calloc (bufferSize, sizeof(char));
-        getline (&strBuffer, &bufferSize, file);
-
-        if (feof (file))
-        {
-            free (strBuffer);
-            break;
-        }
-
-        *(arrayText + *row) = strBuffer;
-        //printf ("text: %s", *(arrayText + *row));
-        (*row)++;
-        printf ("rows = %zu\n", *row);
-    }
-    //(*row)++;
-    return (ferror (file)) ? 0 : EOF;
 }
 
 
