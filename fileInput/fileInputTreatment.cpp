@@ -67,15 +67,15 @@ void transitFileToLineArray (FILE* inputFile, struct Text* text)
 
     text -> nLines = countLines (text -> textArray, text -> textSize);
 
-    text -> lines = transitTextToLineArray (text -> nLines, text -> textArray, text -> lines);
+    text -> lines = transitTextToLineArray (text -> nLines, text -> textArray);
 }
 
-struct Line* transitTextToLineArray (size_t lineAmount, char* text, struct Line* arrayOfStrings)
+struct Line* transitTextToLineArray (size_t lineAmount, char* text)
 {
     MY_ASSERT (text != nullptr, "Pointer to text = nullptr");
     MY_ASSERT (text != nullptr, "Pointer to an array of structs Line = nullptr");
 
-    arrayOfStrings = (struct Line*) calloc (lineAmount, sizeof(struct Line)); //free
+    struct Line* arrayOfStrings = (struct Line*) calloc (lineAmount, sizeof(struct Line)); //free
 
     char* endOfLine = text;
     char* startOfLine = text;
