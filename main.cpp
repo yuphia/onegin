@@ -21,12 +21,18 @@ int main(int argc, char* argv[])
         return 0;
     }
 
+    struct Text text = {};
+    
     FILE* inputFile = fopen (argv[1], "rb");
 
     if (inputFile == nullptr)
     {
         return 0;
     }
+
+    transitFileToLineArray (inputFile, &text);
+
+    fclose (inputFile);
 
     FILE* outputFile = fopen (argv[2], "wb");
 
@@ -35,12 +41,6 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-    struct Text text = {};
-
-    transitFileToLineArray (inputFile, &text);
-
-    printf ("total lines = %zu", text.nLines);
-   
     qsort ((void*)text.lines, text.nLines, sizeof (struct Line), compareLineStruct);
     printLinesArray (outputFile, &text);
 
@@ -50,7 +50,6 @@ int main(int argc, char* argv[])
     runThroughText (text.textArray, text.textSize);
     printTextStruct (&text, outputFile);
 
-    fclose (inputFile);
     fclose (outputFile);  
 
     free (text.textArray);
