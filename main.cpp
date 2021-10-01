@@ -16,7 +16,10 @@ bool checkSortStr (void **array, int size);
 int main(int argc, char* argv[])
 {
     if (argc != 3)
+    {
+        printf ("\n FORMAT FOR RUNNING: ./onegin.out INPUTFILENAME OUTPUTFILENAME");
         return 0;
+    }
 
     FILE* inputFile = fopen (argv[1], "rb");
 
