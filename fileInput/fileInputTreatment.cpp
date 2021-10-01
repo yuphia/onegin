@@ -67,21 +67,21 @@ void transitFileToLineArray (FILE* inputFile, struct Text* text)
 
     text -> nLines = countLines (text -> textArray, text -> textSize);
 
-    text -> lines = transitTextToLineArray (text -> nLines, text -> textArray);
+    text -> lines = transitTextToLineArray (&text -> nLines, text -> textArray);
 }
 
-struct Line* transitTextToLineArray (size_t lineAmount, char* text)
+struct Line* transitTextToLineArray (size_t* lineAmount, char* text)
 {
     MY_ASSERT (text != nullptr, "Pointer to text = nullptr");
     MY_ASSERT (text != nullptr, "Pointer to an array of structs Line = nullptr");
 
-    struct Line* arrayOfStrings = (struct Line*) calloc (lineAmount, sizeof(struct Line)); //free
+    struct Line* arrayOfStrings = (struct Line*) calloc (*lineAmount, sizeof(struct Line)); //free
 
     char* endOfLine = text;
     char* startOfLine = text;
     size_t termChars = 0;
 
-    for (size_t i = 0; i < lineAmount; i++)
+    for (size_t i = 0; i < *lineAmount; i++)
     {
         endOfLine = strchr (startOfLine, '\n');
 
@@ -97,11 +97,23 @@ struct Line* transitTextToLineArray (size_t lineAmount, char* text)
             termChars = 1;
         }
 
-        arrayOfStrings[i].line = startOfLine;
-        arrayOfStrings[i].lineSize = (size_t)(endOfLine - startOfLine);
+        if (!isLineEmpty (startOfLine))
+        {
+            arrayOfStrings[i].line = startOfLine;
+            arrayOfStrings[i].lineSize = (size_t)(endOfLine - startOfLine);
 
-        startOfLine = endOfLine + termChars;
+            startOfLine = endOfLine + termChars;
+        }
+        else
+        {
+            i--;
+            (*lineAmount)--;
+            startOfLine = endOfLine + termChars;
+        }
     }
+
+    arrayOfStrings = (struct Line*)realloc (arrayOfStrings, 
+                                   (size_t)(endOfLine - text) * sizeof(struct Line*));
 
     return arrayOfStrings;
 }
@@ -124,7 +136,7 @@ void printLinesArray (FILE* file, struct Text* text)
     MY_ASSERT (text != nullptr, "Pointer to text = nullptr");    
     for (size_t i = 0; i < text -> nLines; i++)
     {
-        fprintf (stdout, "%s\n", text -> lines[i].line);
+        //fprintf (stdout, "%s\n", text -> lines[i].line);
         fwrite (text -> lines[i].line, text -> lines[i].lineSize, sizeof(char), file);
         fprintf (file, "\n");
     }
@@ -144,3 +156,14 @@ void runThroughText (char* text, size_t textSize)
         *lineStartCheck = '\n';
     }
 } 
+
+bool isLineEmpty (char* line)
+{
+    for (; *line != '\0'; line++)
+    {
+        if ((*line <= 'z' && *line >= 'a') || (*line <= 'Z' && *line >= 'A'))
+            return 0;
+    }
+
+    return 1;
+}
