@@ -18,20 +18,17 @@ bool checkSortStr (void **array, int size);
 
 int main(int argc, char* argv[])
 {
-    FILE *inputFile = nullptr;
-    FILE *outputFile = nullptr;
-
     if (argc != 3)
         return 0;
 
-    inputFile = fopen (argv[1], "rb");
+    FILE* inputFile = fopen (argv[1], "rb");
 
     if (inputFile == nullptr)
     {
         return 0;
     }
 
-    outputFile = fopen (argv[2], "wb");
+    FILE* outputFile = fopen (argv[2], "wb");
 
     if (outputFile == nullptr)
     {
