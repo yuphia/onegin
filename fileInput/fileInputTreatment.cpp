@@ -5,7 +5,7 @@ size_t getFileSize (FILE* inputFile)
     MY_ASSERT (inputFile != 0, "Trying to reach for address nullptr")
 
     fseek (inputFile, 0, SEEK_END);
-    int fileSize = ftell (inputFile);
+    long int fileSize = ftell (inputFile);
     if (fileSize < 0)
         return 0;
 
@@ -43,7 +43,7 @@ void fillText (FILE* inputFile, struct Text* text)
     fseek (inputFile, 0, SEEK_SET);
 }
 
-size_t countLines (char* text)
+size_t countLines (char* text, size_t textSize)
 {
     MY_ASSERT (text != nullptr, "Pointer to text = nullptr");
 
@@ -51,7 +51,8 @@ size_t countLines (char* text)
     char* lineStartCheck = text;
     size_t lineCount = 0;
 
-    while ( ( lineStartCheck = strchr (lineStartTrue, '\n')) != NULL)
+    while ( ( lineStartCheck = strchr (lineStartTrue, '\n')) != NULL && 
+     (size_t)(lineStartCheck - text) < textSize)
     {
         lineStartTrue = lineStartCheck + 1;
         lineCount++;
@@ -64,7 +65,7 @@ void transitFileToLineArray (FILE* inputFile, struct Text* text)
 {
     transitFileToText (inputFile, text);
 
-    text -> nLines = countLines (text -> textArray);
+    text -> nLines = countLines (text -> textArray, text -> textSize);
 
     text -> lines = transitTextToLineArray (text -> nLines, text -> textArray, text -> lines);
 }
@@ -84,7 +85,7 @@ struct Line* transitTextToLineArray (size_t lineAmount, char* text, struct Line*
     {
         endOfLine = strchr (startOfLine, '\n');
 
-        if (*(endOfLine - 1) == '\r')
+        if (endOfLine - startOfLine > 2 && *(endOfLine - 1) == '\r')
         {
             *(endOfLine - 1) = '\0';
             endOfLine--;
@@ -97,7 +98,7 @@ struct Line* transitTextToLineArray (size_t lineAmount, char* text, struct Line*
         }
 
         arrayOfStrings[i].line = startOfLine;
-        arrayOfStrings[i].lineSize = endOfLine - startOfLine;
+        arrayOfStrings[i].lineSize = (size_t)(endOfLine - startOfLine);
 
         startOfLine = endOfLine + termChars;
     }
@@ -118,12 +119,28 @@ void freeArrayLines (struct Line* lines)
     free (lines);
 }
 
-void printLinesArray (struct Text* text)
+void printLinesArray (FILE* file, struct Text* text)
 {
     MY_ASSERT (text != nullptr, "Pointer to text = nullptr");    
-
     for (size_t i = 0; i < text -> nLines; i++)
     {
         fprintf (stdout, "%s\n", text -> lines[i].line);
+        fwrite (text -> lines[i].line, text -> lines[i].lineSize, sizeof(char), file);
+        fprintf (file, "\n");
     }
 }
+
+void runThroughText (char* text, size_t textSize)
+{
+    MY_ASSERT (text != nullptr, "Pointer to text = nullptr");
+
+    char* lineStartTrue = text;
+    char* lineStartCheck = text;
+
+    while ( ( lineStartCheck = strchr (lineStartTrue, '\0')) != NULL && 
+     (size_t)(lineStartCheck - text) < textSize - 1)
+    {
+        lineStartTrue = lineStartCheck + 1;
+        *lineStartCheck = '\n';
+    }
+} 

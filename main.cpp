@@ -42,16 +42,19 @@ int main(int argc, char* argv[])
 
     transitFileToLineArray (inputFile, &text);
 
-    printf ("total lines = %ld", text.nLines);
+    printf ("total lines = %zu", text.nLines);
+   
+    qsort ((void*)text.lines, text.nLines, sizeof (struct Line), compareLineStruct);
+    printLinesArray (outputFile, &text);
 
     qsort ((void*)text.lines, text.nLines, sizeof (struct Line), compareLineStructEnd);
-    //qsortMy ((void*)(text -> arrayText), rows - 1, sizeof (char*), comparatorStr);
-//////////////////////////////////////////// CREATE QSORT ANALOG FOR STRUCT AND ADD line
-//TREATMENT
-    fclose (inputFile);
-    fclose (outputFile);
+    printLinesArray (outputFile, &text);
     
-    printLinesArray (&text);
+    runThroughText (text.textArray, text.textSize);
+    printTextStruct (&text, outputFile);
+
+    fclose (inputFile);
+    fclose (outputFile);  
 
     free (text.textArray);
 
@@ -83,7 +86,7 @@ int readFile (char *arrayText[], FILE* file, size_t *row)
         *(arrayText + *row) = strBuffer;
         //printf ("text: %s", *(arrayText + *row));
         (*row)++;
-        printf ("rows = %ld\n", *row);
+        printf ("rows = %zu\n", *row);
     }
     //(*row)++;
     return (ferror (file)) ? 0 : EOF;
@@ -93,7 +96,7 @@ int readFile (char *arrayText[], FILE* file, size_t *row)
 void arrayFree (char *arrayText[], size_t arraySize)
 {
     MY_ASSERT (arrayText != nullptr, "pointer to arrayText is equal to nullptr");
-    printf ("rows = %ld\n", arraySize);
+    printf ("rows = %zu\n", arraySize);
 
     for (size_t i = 0; i < arraySize; i++)
         {

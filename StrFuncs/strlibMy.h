@@ -22,3 +22,10 @@ char *fgetsMy (char *str, int maxSize, FILE* stream);
 size_t getlineMy (char **lineptr, size_t *maxSize, FILE* stream);
 
 void printText (char* text[], size_t rows, FILE* outputFile);
+char* strdupMy (const char* srcStr);
+
+char *strncatMy (char *destStr, const char *srcStr, size_t amount);
+char *strcatMy (char *destStr, const char *srcStr);
+
+
+

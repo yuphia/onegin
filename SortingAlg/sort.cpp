@@ -30,62 +30,70 @@ void dump_list(const char *tag, int *ptr, int left, int right)
 }
 
 // Partitioning algorithm used in qsort
-int partition(void *array, int left, int right, size_t elementSize, int (*comparator) (const void*, const void*))
+size_t partition(void *array, size_t left, size_t right, size_t elementSize, int (*comparator) (const void*, const void*))
 {
     MY_ASSERT (array != nullptr, "pointer to array is equal to nullptr");
 
-    int pivot = left;
+    size_t pivot = left;
     //char* p_val = *(char**)(array + elementSize * pivot);
     void* p_val = calloc (1, elementSize); // if p_va; l == NULL Couldn't allocate memory
 
     if (p_val == nullptr)
         return 0;
-    else
+    
+
+    memcpy (p_val, (uc*)array + elementSize * pivot, elementSize);
+
+    if (right - left > 1)
     {
-        memcpy (p_val, (uc*)array + elementSize * pivot, elementSize);
-
-        if (right - left > 1)
+        while (left < right)
         {
-            while (left < right)
-            {
-                //printf ("loop, left = %d, right = %d\n", left, right);
-                while (comparator ((uc*)array + elementSize * left, p_val) <= 0/*array[left] <= p_val*/)
-                    left++;
-                printf ("\n%s\nlineSize = %ld \n%d, %d\n\n", ((struct Line*)((uc*)array + elementSize * right)) -> line, ((struct Line*)((const void*)((uc*)array + elementSize * right))) -> lineSize, left, right);
-                $$$
-                while (comparator ((const void*)((uc*)array + elementSize * right), p_val) > 0/*array[right] > p_val)*/)
-                    right--;
-                printf ("\nBEBRA %s\nlineSize = %ld \n%d, %d\n\n", ((struct Line*)((uc*)array + elementSize * right)) -> line, ((struct Line*)((const void*)((uc*)array + elementSize * right))) -> lineSize, left, right);
+            //printf ("loop, left = %d, right = %d\n", left, right);
+            while (comparator ((uc*)array + elementSize * left, p_val) <= 0/*array[left] <= p_val*/)
+                left++;
+            printf ("\n%s"
+                    "\nlineSize = %zu \n"
+                    "%zu, %zu\n\n", 
+                    ((const struct Line*)((uc*)array + elementSize * right)) -> line, 
+                    ((const struct Line*)((const void*)((uc*)array + 
+                                                       elementSize * right))) -> lineSize, 
+                    left, right);
+            $$$
+            while (comparator ((const void*)((uc*)array + elementSize * right), p_val) > 0/*array[right] > p_val)*/)
+                right--;
+            printf ("\nBEBRA %s\n"
+                    "lineSize = %zu \n"
+                    "%zu, %zu\n\n", 
+                    ((const struct Line*)((uc*)array + elementSize * right)) -> line, 
+                    ((const struct Line*)((const void*)((uc*)array + 
+                                                       elementSize * right))) -> lineSize, 
+                    left, right);
 
-                if (left < right)
-                    swap ((uc*)array + elementSize * left, (uc*)array + elementSize * right, sizeof(elementSize));
-            }
-
-            swap ((uc*)array + elementSize * pivot, (uc*)array + elementSize * right, sizeof(elementSize));
-        }
-        else if (left < right)
-        {
-            if (comparator ((uc*)array + elementSize * left, (uc*)array + elementSize * right) > 0)
+            if (left < right)
                 swap ((uc*)array + elementSize * left, (uc*)array + elementSize * right, sizeof(elementSize));
         }
 
-        free (p_val);
-        return right;
+        swap ((uc*)array + elementSize * pivot, (uc*)array + elementSize * right, sizeof(elementSize));
+    }
+    else if (left < right)
+    {
+        if (comparator ((uc*)array + elementSize * left, (uc*)array + elementSize * right) > 0)
+           swap ((uc*)array + elementSize * left, (uc*)array + elementSize * right, sizeof(elementSize));
     }
 
     free (p_val);
-
-    return 0; // Later will improve to error code that means that we couldn't allocate memory
+    return right;
+ // Later will improve to error code that means that we couldn't allocate memory
 }
 
 // Quicksort recursion
-void quicksort(void *array, int start, int end, size_t elementSize, int (*comparator) (const void*, const void*))
+void quicksort(void *array, size_t start, size_t end, size_t elementSize, int (*comparator) (const void*, const void*))
 {
     MY_ASSERT (array != nullptr, "pointer to array is equal to nullptr");
 
     if (start < end)
     {
-        int splitPoint = partition(array, start, end, elementSize, comparator);
+        size_t splitPoint = partition(array, start, end, elementSize, comparator);
 
         quicksort(array, start, splitPoint - 1, elementSize, comparator);
         quicksort(array, splitPoint + 1, end, elementSize, comparator);
@@ -116,7 +124,7 @@ int compareInt (const void* n1, const void* n2)
     MY_ASSERT (n1 != nullptr, "pointer to n1 is equal to nullptr");
     MY_ASSERT (n2 != nullptr, "pointer to n2 is equal to nullptr");
 
-    return (*(int*)n1 - *(int*)n2);
+    return (*(const int*)n1 - *(const int*)n2);
 }
 
 // Comparator for integer values largest to smallest
@@ -125,7 +133,7 @@ int compareIntReverse (const void* n1, const void* n2)
     MY_ASSERT (n1 != nullptr, "pointer to n1 is equal to nullptr");
     MY_ASSERT (n2 != nullptr, "pointer to n2 is equal to nullptr");
 
-    return (-(*(int*)n1 - *(int*)n2));
+    return (-(*(const int*)n1 - *(const int*)n2));
 }
 
 int compareDouble (const void* n1, const void* n2)
@@ -133,20 +141,23 @@ int compareDouble (const void* n1, const void* n2)
     MY_ASSERT (n1 != nullptr, "pointer to n1 is equal to nullptr");
     MY_ASSERT (n2 != nullptr, "pointer to n2 is equal to nullptr");
 
-    return (*(double*)n1 - *(double*)n2);
+    return (int)(*(const double*)n1 - *(const double*)n2);
 }
 
 int compareLineStruct (const void* n1, const void* n2)
 {                                 //n2LineStart
-    char* n1LineStart     = ((struct Line*) n1)->line;
-    char* n1LineEnd  = ((struct Line*) n1)->line + ((struct Line*) n1)->lineSize;
-    char* n2LineStart    = ((struct Line*) n2)->line;
-    char* n2LineEnd = ((struct Line*) n2)->line + ((struct Line*) n2)->lineSize;
+    char* n1LineStart     = ((const struct Line*) n1)->line;
+    char* n1LineEnd       = ((const struct Line*) n1)->line + 
+                            ((const struct Line*) n1)->lineSize;
 
-    printf ("left size  = %ld\n"
-            "right size = %ld\n",
-            ((struct Line*)n1) -> lineSize,
-            ((struct Line*)n2) -> lineSize);
+    char* n2LineStart     = ((const struct Line*) n2)->line;
+    char* n2LineEnd       = ((const struct Line*) n2)->line + 
+                            ((const struct Line*) n2)->lineSize;
+
+    printf ("left size  = %zu\n"
+            "right size = %zu\n",
+            ((const struct Line*)n1) -> lineSize,
+            ((const struct Line*)n2) -> lineSize);
 
     printf ("line left  = %s\n"
             "line right = %s\n",
@@ -175,26 +186,41 @@ int compareLineStruct (const void* n1, const void* n2)
 
 int compareLineStructEnd (const void *n1, const void *n2)
 {
-    char* n1LineStart     = ((struct Line*) n1) -> line + ((struct Line*) n1) -> lineSize - 1;
-    char* n1LineEnd  = ((struct Line*) n1) -> line;
-    char* n2LineStart    = ((struct Line*) n2) -> line + ((struct Line*) n2)-> lineSize - 1;
-    char* n2LineEnd = ((struct Line*) n2) -> line;
+    char* n1LineStart     = ((const struct Line*) n1) -> line + 
+                           (((const struct Line*) n1) -> lineSize) - 1;
 
-    while (isalnum((int)(unsigned char)*n1LineStart ) == 0 && *n1LineStart != '\0')
+    char* n1LineEnd       = ((const struct Line*) n1) -> line;
+    
+    char* n2LineStart     = ((const struct Line*) n2) -> line + 
+                           (((const struct Line*) n2)-> lineSize) - 1;
+
+    char* n2LineEnd       = ((const struct Line*) n2) -> line;
+
+    while (n1LineStart > n1LineEnd && isalnum((int)(unsigned char)*n1LineStart ) == 0 && *n1LineStart != '\0')
         n1LineStart--;
-    while (isalnum((int)(unsigned char)*n2LineStart) == 0 && *n2LineStart != '\0')
+    while (n2LineStart > n2LineEnd && isalnum((int)(unsigned char)*n2LineStart) == 0 && *n2LineStart != '\0')
         n2LineStart--;
 
-    while (*n1LineStart == *n2LineStart && n2LineStart != n2LineEnd && n1LineStart != n1LineEnd)
+    while ( n2LineStart > n2LineEnd && 
+            n1LineStart > n1LineEnd &&
+            *n1LineStart == *n2LineStart)
     {
         n1LineStart--;
         n2LineStart--;
 
-        while (isalnum((int)(unsigned char)*n1LineStart ) == 0 && n1LineStart != n1LineEnd && *n1LineStart != '\0')
+        while (n1LineStart > n1LineEnd && isalnum((int)(unsigned char)*n1LineStart) == 0
+               && 
+               *n1LineStart != '\0')
             n1LineStart--;
-        while (isalnum((int)(unsigned char)*n2LineStart) == 0 && n2LineStart != n2LineEnd && *n2LineStart != '\0')
+        while (n2LineStart > n2LineEnd && isalnum((int)(unsigned char)*n2LineStart) == 0 
+               && 
+               *n2LineStart != '\0')
             n2LineStart--;
     }
+    
+    if (n1LineStart <= n1LineEnd && n2LineStart <= n2LineEnd) return 0;
+    if (n1LineStart <= n1LineEnd) return -1;
+    if (n2LineStart <= n2LineEnd) return  1;
 
     return ((int)(unsigned char)(*n1LineStart) - (int)(unsigned char)(*n2LineStart));
 }

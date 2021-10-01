@@ -25,11 +25,12 @@ size_t getFileSize (FILE* inputFile);
 bool isFile (FILE* file);
 void transitFileToText (FILE* inputFile, struct Text* text);
 void fillText (FILE* inputFile, struct Text* text);
-size_t countLines (char* text);
+size_t countLines (char* text, size_t textSize);
 struct Line* transitTextToLineArray (size_t lineAmount, char* text, struct Line* arrayOfStrings);
 void printTextStruct (struct Text* text, FILE* fileOut);
 void freeArrayLines (struct Line* lines);
 void transitFileToLineArray (FILE* inputFile, struct Text* text);
-void printLinesArray (struct Text* text);
+void printLinesArray (FILE* file, struct Text* text);
+void runThroughText (char* text, size_t textSize);
 
 #endif

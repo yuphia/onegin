@@ -114,7 +114,7 @@ char *strcatMy (char *destStr, const char *srcStr)
     MY_ASSERT (destStr != nullptr, "pointer to destStr equals nullptr");
     MY_ASSERT (srcStr  != nullptr, "pointer to srcStr  equals nullptr");
 
-    int destStr_len = strlenMy (destStr);
+    size_t destStr_len = strlenMy (destStr);
     size_t i = 0;
 
     for (; srcStr[i] != '\0'; i++)
@@ -129,7 +129,7 @@ char *strncatMy (char *destStr, const char *srcStr, size_t amount)
     MY_ASSERT (destStr != nullptr, "pointer to destStr equals nullptr");
     MY_ASSERT (srcStr  != nullptr, "pointer to srcStr  equals nullptr");
 
-    int destStr_len = strlenMy (destStr);
+    size_t destStr_len = strlenMy (destStr);
     size_t i = 0;
 
     for (; i < amount;  i++)
@@ -154,14 +154,14 @@ char *fgetsMy (char *str, int maxSize, FILE* stream)
         return nullptr;
     }
 
-    int character = '\0';
+    char character = '\0';
     char* str0 = str;
 
     printf ("%d, %ld", maxSize, str - str0);
 
     for (; str - str0 < maxSize; str++)
     {
-        character = getc (stream);
+        character = (char)getc (stream);
 
         putc (character, stdout);
 
