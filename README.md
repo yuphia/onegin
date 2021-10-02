@@ -17,7 +17,7 @@ Than you should run the program from the command line:
 2) You compile the program using the "make" command
 3) Run it using command 
 ``` bash
-./build/onegin.out "input.txt" "output.txt" 
+./build/onegin.out INPUT_FILE OUTPUT_FILE 
 ```
 
 # 2. Concepts used in the program
