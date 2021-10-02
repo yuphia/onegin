@@ -31,8 +31,8 @@
     The program only works for: 
     
     fileTypes
-    :white_check_mark: .txt files
+                .txt files
 
     languages
-    :white_check_mark: English
+                English
 
