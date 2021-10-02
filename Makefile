@@ -2,6 +2,9 @@ WARNS = -std=c++14   -Weffc++ -Waggressive-loop-optimizations -Wc++0x-compat -Wc
 NUM_ERRORS = -fmax-errors=1
 
 all:
-	g++ -g -Wall -Werror -Wextra -Wpedantic $(WARNS) -Wno-error=unused-function main.cpp ./fileInput/fileInputTreatment.cpp ./SortingAlg/sort.cpp ./StrFuncs/strlibMy.cpp -o onegin.out	
+	mkdir -p build
+	g++ -g -Wall -Werror -Wextra -Wpedantic $(WARNS) -Wno-error=unused-function main.cpp ./fileInput/fileInputTreatment.cpp ./SortingAlg/sort.cpp ./StrFuncs/strlibMy.cpp -o build/onegin.out	
 	#$(NUM_ERRORS) 
-	
+
+clean:
+	rm -rf build/*
