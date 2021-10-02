@@ -77,10 +77,10 @@ void arrayFree (char *arrayText[], size_t arraySize)
     printf ("rows = %zu\n", arraySize);
 
     for (size_t i = 0; i < arraySize; i++)
-        {
+    {
         if (arrayText[i])
             free (arrayText [i]);
-        }
+    }
 }
 
 
