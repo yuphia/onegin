@@ -1,6 +1,6 @@
 #include "sort.h"
-#include "../StrFuncs/strlibMy.h"
-#include "../fileInput/fileInputTreatment.h"
+#include "strlibMy.h"
+#include "fileInputTreatment.h"
 
 inline void swap (void *a, void *b, size_t size)
 {

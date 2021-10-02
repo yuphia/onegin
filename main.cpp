@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <iostream>
-#include "StrFuncs/strlibMy.h"
-#include "SortingAlg/sort.h"
-#include "fileInput/fileInputTreatment.h"
-#include "fileInput/fileInputTreatment.h" 
+#include "strlibMy.h"
+#include "sort.h"
+#include "fileInputTreatment.h" 
 #include <cstring>
 
 const int MAXROWLENGTH = 100;

@@ -3,7 +3,7 @@ NUM_ERRORS = -fmax-errors=1
 
 all:
 	mkdir -p build
-	g++ -g -Wall -Werror -Wextra -Wpedantic $(WARNS) -Wno-error=unused-function main.cpp ./fileInput/fileInputTreatment.cpp ./SortingAlg/sort.cpp ./StrFuncs/strlibMy.cpp -o build/onegin.out	
+	g++ -g -Wall -Werror -Wextra -Wpedantic $(WARNS) -Wno-error=unused-function main.cpp ./fileInput/fileInputTreatment.cpp ./SortingAlg/sort.cpp ./StrFuncs/strlibMy.cpp -I ./fileInput/ -I ./MistakeHandling/ -I ./StrFuncs/ -I ./SortingAlg/ -o build/onegin.out	
 	#$(NUM_ERRORS) 
 
 clean:

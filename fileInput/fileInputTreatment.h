@@ -2,7 +2,7 @@
 
 #define FILEINPUTTREATMENT_H    
 
-#include "../MistakeHandling/myAssert.h"
+#include "myAssert.h"
 #include <stdio.h>
 #include <cstring>
 #include <iostream>

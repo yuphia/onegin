@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../MistakeHandling/myAssert.h"
+#include "myAssert.h"
 #include <cstring>
 
 typedef unsigned char uc;
