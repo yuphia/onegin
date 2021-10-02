@@ -27,7 +27,8 @@ int main(int argc, char* argv[])
 
     if (inputFile == nullptr)
     {
-        return 0;
+        printf ("Pointer to inputFile equals to nullptr");
+        return 1;
     }
 
     transitFileToLineArray (inputFile, &text);
@@ -38,7 +39,8 @@ int main(int argc, char* argv[])
 
     if (outputFile == nullptr)
     {
-        return 0;
+        printf ("Pointer to outputFile is equal to nullptr");
+        return 1;
     }
 
     qsort ((void*)text.lines, text.nLines, sizeof (struct Line), compareLineStruct);
