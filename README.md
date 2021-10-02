@@ -28,4 +28,11 @@
 
 # 3. Compatibility
 
-    The program only works for english characters and .txt files
+    The program only works for: 
+    
+    fileTypes
+    :white_check_mark: .txt files
+
+    languages
+    :white_check_mark: English
+
