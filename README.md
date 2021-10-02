@@ -16,7 +16,7 @@ Than you should run the program from the command line:
 1) You have to change your current repository using "cd"
 2) You compile the program using the "make" command
 3) Run it using command 
-'''bash ./build/onegin.out "input.txt" "output.txt" '''
+```bash ./build/onegin.out "input.txt" "output.txt" ```
 
 # 2. Concepts used in the program
 
