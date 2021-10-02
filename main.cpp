@@ -1,111 +1,87 @@
 #include <stdio.h>
 #include <iostream>
-#include "StrFuncs/strlibMy.h"
-#include "SortingAlg/sort.h"
+#include "strlibMy.h"
+#include "sort.h"
+#include "fileInputTreatment.h" 
 #include <cstring>
-#include "fileInputTreatment.h"
 
 const int MAXROWLENGTH = 100;
 const int MAXROW = 27000;//27000;
 
-
-int readFile (char *textArray[], FILE* file, size_t *row);
-
 void arrayFree (char *arrayText[], size_t arraySize);
-
-int comparatorStr (const void* v1, const void* v2);
 
 bool checkSortStr (void **array, int size);
 
 int main(int argc, char* argv[])
 {
-    FILE *inputFile = nullptr;
-    FILE *outputFile = nullptr;
-
     if (argc != 3)
-        return 0;
-
-    inputFile = fopen (argv[1], "rb");
-
-    if (inputFile != nullptr)
     {
-        //size_t rows = 0;
-        
-       
-        outputFile = fopen (argv[2], "wb");
-        if (outputFile == nullptr)
-        {
-            return 0;
-        }
-
-        struct Text text = {};
-        transitFileToText (inputFile, &text);
-
-        
-            //qsort ((void*)arrayTextTest, rows, sizeof (char*), comparatorStr);
-        //qsortMy ((void*)arrayText, rows - 1, sizeof (char*), comparatorStr);
-
-        fclose (inputFile);
-        fclose (outputFile);
-       
-        printTextStruct (&text, stdout);
-
-        free (text.textArray);
+        printf ("FORMAT FOR RUNNING: %s INPUTFILENAME OUTPUTFILENAME\n", argv[0]);
+        return 0;
     }
+
+    struct Text text = {};
+    
+    FILE* inputFile = fopen (argv[1], "rb");
+
+    if (inputFile == nullptr)
+    {
+        printf ("Pointer to inputFile equals to nullptr");
+        return 1;
+    }
+
+    transitFileToLineArray (inputFile, &text);
+
+    fclose (inputFile);
+
+    FILE* outputFile = fopen (argv[2], "wb");
+
+    if (outputFile == nullptr)
+    {
+        printf ("Pointer to outputFile is equal to nullptr");
+        return 1;
+    }
+
+    qsort (text.lines, text.nLines, sizeof (struct Line), compareLineStruct);
+    
+    markerNormalSortStart (outputFile);
+    printLinesArray (outputFile, &text);
+    markerNormalSortEnd (outputFile);
+
+    qsort (text.lines, text.nLines, sizeof (struct Line), compareLineStructEnd);
+
+    markerReverseSortStart (outputFile);
+    printLinesArray (outputFile, &text);
+    markerReverseSortEnd (outputFile);
+    
+    runThroughText (text.textArray, text.textSize);
+
+    markerNoSortStart (outputFile);
+    printTextStruct (&text, outputFile);
+    markerNoSortEnd (outputFile);
+
+    fclose (outputFile);  
+
+    free (text.textArray);
+
+    freeArrayLines (text.lines);
 
     return 0;
-}
-
-
-int readFile (char *arrayText[], FILE* file, size_t *row)
-{
-    MY_ASSERT (arrayText != nullptr, "pointer to arrayText is equal to nullptr");
-    MY_ASSERT (file != nullptr, "pointer to file is equal to nullptr");
-    MY_ASSERT (row != nullptr, "pointer to row is equal to nullptr");
-
-    *row = 0;
-    while (*row < MAXROW)
-    {
-        size_t bufferSize = 25;
-        char* strBuffer = (char*)calloc (bufferSize, sizeof(char));
-        getline (&strBuffer, &bufferSize, file);
-
-        if (feof (file))
-        {
-            free (strBuffer);
-            break;
-        }
-
-        *(arrayText + *row) = strBuffer;
-        //printf ("text: %s", *(arrayText + *row));
-        (*row)++;
-        printf ("rows = %ld\n", *row);
-    }
-    //(*row)++;
-    return (ferror (file)) ? 0 : EOF;
 }
 
 
 void arrayFree (char *arrayText[], size_t arraySize)
 {
     MY_ASSERT (arrayText != nullptr, "pointer to arrayText is equal to nullptr");
-    printf ("rows = %ld\n", arraySize);
+    printf ("rows = %zu\n", arraySize);
 
     for (size_t i = 0; i < arraySize; i++)
-        {
+    {
         if (arrayText[i])
             free (arrayText [i]);
-        }
+    }
 }
 
-int comparatorStr (const void* v1, const void* v2)
-{
-    MY_ASSERT (v1 != nullptr, "pointer to v1 is equal to nullptr");
-    MY_ASSERT (v2 != nullptr, "pointer to v2 is equal to nullptr");
-    //if v1 or v2 = null -> return error code
-
-    return strcmpMy (*(char* const*)v1, *(char* const*)v2);
-}
 
 bool checkSortStr (void **array, int size)
 {
