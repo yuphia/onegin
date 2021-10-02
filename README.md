@@ -31,8 +31,10 @@ The sorting function is qsort from standart library
 The program only works for: 
     
 fileTypes
+
    **.txt**
 
 languages
+
    **English**
 
