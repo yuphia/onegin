@@ -161,7 +161,7 @@ bool isLineEmpty (char* line)
 {
     for (; *line != '\0'; line++)
     {
-        if ((*line <= 'z' && *line >= 'a') || (*line <= 'Z' && *line >= 'A'))
+        if (tolower(*line) <= 'z' && tolower(*line) >= 'a')
             return 0;
     }
 
