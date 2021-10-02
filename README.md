@@ -1,6 +1,6 @@
 ## ONEGIN, a programm for sorting text files
 
- Table of contents
+# Table of contents
 
 1. Starting and downloading
 2. Concepts used in the program
@@ -8,7 +8,7 @@
 
 
 
- 1. Starting and downloading
+ #1. Starting and downloading
 
     First you have to download all the files in this repo except the build repository
     
@@ -17,7 +17,7 @@
     2) You compile the program using the "make" command
     3) Run it using command ./build/onegin.out "input.txt" "output.txt"
 
- 2. Concepts used in the program
+ #2. Concepts used in the program
 
     The program opens your files and converts your text file into an array of special struct Line
     this struct consists of a pointer to a line and a lineSize variable
@@ -26,6 +26,6 @@
     
     The sorting function is qsort from standart library
 
- 3. Compatibility
+ #3. Compatibility
 
     The program only works for english characters and .txt files
