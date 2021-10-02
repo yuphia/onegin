@@ -31,8 +31,8 @@ The sorting function is qsort from standart library
 The program only works for: 
     
 fileTypes
-        .txt files
+        '''bash .txt files'''
 
 languages
-        English
+        '''bash English'''
 
