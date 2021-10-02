@@ -1,6 +1,6 @@
 #ifndef FILEINPUTTREATMENT_H
 
-#define FILEINPUTTREATMENT_H
+#define FILEINPUTTREATMENT_H    
 
 #include "../MistakeHandling/myAssert.h"
 #include <stdio.h>

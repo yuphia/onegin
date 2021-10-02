@@ -154,15 +154,6 @@ int compareLineStruct (const void* n1, const void* n2)
     char* n2LineEnd       = ((const struct Line*) n2)->line + 
                             ((const struct Line*) n2)->lineSize;
 
-    printf ("left size  = %zu\n"
-            "right size = %zu\n",
-            ((const struct Line*)n1) -> lineSize,
-            ((const struct Line*)n2) -> lineSize);
-
-    printf ("line left  = %s\n"
-            "line right = %s\n",
-            n1LineStart, n2LineStart);
-
     while (isalnum(*n1LineStart ) == 0 && *n1LineStart != '\0')   n1LineStart++;
     while (isalnum(*n2LineStart) == 0 && *n2LineStart != '\0') n2LineStart++;
 
@@ -174,13 +165,6 @@ int compareLineStruct (const void* n1, const void* n2)
         while (isalnum((int)(unsigned char)*n1LineStart ) == 0 && n1LineStart != n1LineEnd) n1LineStart++;
         while (isalnum((int)(unsigned char)*n2LineStart) == 0 && n2LineStart != n2LineEnd) n2LineStart++;
     }
-
-    printf ("line left  = %s\n"
-            "line right = %s\n",
-            n1LineStart, n2LineStart);
-
-    printf ("%d\n", ((int)(*n1LineStart) - (int)(*n2LineStart)));
-
  
     int n1val = tolower ((int)(unsigned char)(*n1LineStart));
     int n2val = tolower ((int)(unsigned char)(*n2LineStart));
