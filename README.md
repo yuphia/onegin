@@ -10,29 +10,29 @@
 
 # 1. Starting and downloading
 
-    First you have to download all the files in this repo except the build repository
+First you have to download all the files in this repo except the build repository
     
-    Than you should run the program from the command line:
-    1) You have to change your current repository using "cd"
-    2) You compile the program using the "make" command
-    3) Run it using command ./build/onegin.out "input.txt" "output.txt"
+Than you should run the program from the command line:
+1) You have to change your current repository using "cd"
+2) You compile the program using the "make" command
+3) Run it using command ./build/onegin.out "input.txt" "output.txt"
 
 # 2. Concepts used in the program
 
-    The program opens your files and converts your text file into an array of special struct Line
-    this struct consists of a pointer to a line and a lineSize variable
+The program opens your files and converts your text file into an array of special struct Line
+this struct consists of a pointer to a line and a lineSize variable
     
-    While sorting this program ignores all empty lines and characters that are not letters
+While sorting this program ignores all empty lines and characters that are not letters
     
-    The sorting function is qsort from standart library
+The sorting function is qsort from standart library
 
 # 3. Compatibility
 
-    The program only works for: 
+The program only works for: 
     
-    fileTypes
-                .txt files
+fileTypes
+        .txt files
 
-    languages
-                English
+languages
+        English
 
