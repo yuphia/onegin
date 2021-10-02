@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 {
     if (argc != 3)
     {
-        printf ("\n FORMAT FOR RUNNING: ./onegin.out INPUTFILENAME OUTPUTFILENAME\n");
+        printf ("FORMAT FOR RUNNING: %s INPUTFILENAME OUTPUTFILENAME\n", argv[0]);
         return 0;
     }
 
