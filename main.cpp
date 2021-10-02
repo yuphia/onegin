@@ -43,13 +43,13 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    qsort ((void*)text.lines, text.nLines, sizeof (struct Line), compareLineStruct);
+    qsort (text.lines, text.nLines, sizeof (struct Line), compareLineStruct);
     
     markerNormalSortStart (outputFile);
     printLinesArray (outputFile, &text);
     markerNormalSortEnd (outputFile);
 
-    qsort ((void*)text.lines, text.nLines, sizeof (struct Line), compareLineStructEnd);
+    qsort (text.lines, text.nLines, sizeof (struct Line), compareLineStructEnd);
 
     markerReverseSortStart (outputFile);
     printLinesArray (outputFile, &text);
