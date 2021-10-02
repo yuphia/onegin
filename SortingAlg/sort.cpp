@@ -162,12 +162,12 @@ int compareLineStruct (const void* n1, const void* n2)
         n1LineStart++;
         n2LineStart++;
 
-        while (isalnum((int)(unsigned char)*n1LineStart ) == 0 && n1LineStart != n1LineEnd) n1LineStart++;
-        while (isalnum((int)(unsigned char)*n2LineStart) == 0 && n2LineStart != n2LineEnd) n2LineStart++;
+        while (isalnum((int)*n1LineStart ) == 0 && n1LineStart != n1LineEnd) n1LineStart++;
+        while (isalnum((int)*n2LineStart) == 0 && n2LineStart != n2LineEnd) n2LineStart++;
     }
  
-    int n1val = tolower ((int)(unsigned char)(*n1LineStart));
-    int n2val = tolower ((int)(unsigned char)(*n2LineStart));
+    int n1val = tolower ((int)(*n1LineStart));
+    int n2val = tolower ((int)(*n2LineStart));
     return (n1val- n2val);
 }
 
@@ -183,9 +183,9 @@ int compareLineStructEnd (const void *n1, const void *n2)
 
     char* n2LineEnd       = ((const struct Line*) n2) -> line;
 
-    while (n1LineStart > n1LineEnd && isalnum((int)(unsigned char)*n1LineStart ) == 0 && *n1LineStart != '\0')
+    while (n1LineStart > n1LineEnd && isalnum((int)*n1LineStart ) == 0 && *n1LineStart != '\0')
         n1LineStart--;
-    while (n2LineStart > n2LineEnd && isalnum((int)(unsigned char)*n2LineStart) == 0 && *n2LineStart != '\0')
+    while (n2LineStart > n2LineEnd && isalnum((int)*n2LineStart) == 0 && *n2LineStart != '\0')
         n2LineStart--;
 
     while ( n2LineStart > n2LineEnd && 
@@ -195,11 +195,11 @@ int compareLineStructEnd (const void *n1, const void *n2)
         n1LineStart--;
         n2LineStart--;
 
-        while (n1LineStart > n1LineEnd && isalnum((int)(unsigned char)*n1LineStart) == 0
+        while (n1LineStart > n1LineEnd && isalnum((int)*n1LineStart) == 0
                && 
                *n1LineStart != '\0')
             n1LineStart--;
-        while (n2LineStart > n2LineEnd && isalnum((int)(unsigned char)*n2LineStart) == 0 
+        while (n2LineStart > n2LineEnd && isalnum((int)*n2LineStart) == 0 
                && 
                *n2LineStart != '\0')
             n2LineStart--;
@@ -209,8 +209,8 @@ int compareLineStructEnd (const void *n1, const void *n2)
     if (n1LineStart <= n1LineEnd) return -1;
     if (n2LineStart <= n2LineEnd) return  1;
 
-    int n1val = tolower ((int)(unsigned char)(*n1LineStart));
-    int n2val = tolower ((int)(unsigned char)(*n2LineStart));
+    int n1val = tolower ((int)(*n1LineStart));
+    int n2val = tolower ((int)(*n2LineStart));
     return (n1val- n2val);
 }
 
