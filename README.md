@@ -15,7 +15,7 @@ First you have to download all the files in this repo except the build repositor
 Than you should run the program from the command line:
 1) You have to change your current repository using "cd"
 2) You compile the program using the "make" command
-3) Run it using command ./build/onegin.out "input.txt" "output.txt"
+3) Run it using command **./build/onegin.out "input.txt" "output.txt"**
 
 # 2. Concepts used in the program
 
@@ -31,8 +31,8 @@ The sorting function is qsort from standart library
 The program only works for: 
     
 fileTypes
-        '''bash .txt files'''
+   **.txt**
 
 languages
-        '''bash English'''
+   **English**
 
