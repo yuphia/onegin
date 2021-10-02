@@ -1,3 +1,9 @@
+
+
+
+############################################    SORTING TEXT FROM THE BEGINNING    ############################################
+
+
 A baseness to write fair and labour'd much
 A blanket, in the alarm of fear caught up;
 A bloody deed! almost as bad, good mother,
@@ -5380,6 +5386,18 @@ You that look pale and tremble at this chance,
 You will do't, sir, really.
 yesty collection, which carries them through and
 You will lose this wager, my lord.
+
+
+
+############################################    FINISHED SORTING TEXT FROM THE BEGINNING    ############################################
+
+
+
+
+
+############################################    SORTING TEXT FROM THE END   ############################################
+
+
 Ha!
 What's Hecuba to him, or he to Hecuba,
 A pestilence on him for a mad rogue! a' poured a
@@ -10762,6 +10780,18 @@ ROSENCRANTZ
 ROSENCRANTZ
 Enter ROSENCRANTZ
 Thanks, Guildenstern and gentle Rosencrantz:
+
+
+
+############################################    FINISHED SORTING TEXT FROM THE END  ############################################
+
+
+
+
+
+############################################    DUMPING THE ORIGINAL TEXT   ############################################
+
+
 
 The Tragedy of Hamlet, Prince of Denmark
 Shakespeare homepage | Hamlet | Entire play
@@ -16330,3 +16360,8 @@ Take up the bodies: such a sight as this
 Becomes the field, but here shows much amiss.
 Go, bid the soldiers shoot.
 A dead march. Exeunt, bearing off the dead bodies; after which a peal of ordnance is shot off 
+
+
+############################################    FINISHED DUMPING THE ORIGINAL TEXT  ############################################
+
+

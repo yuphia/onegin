@@ -167,3 +167,94 @@ bool isLineEmpty (char* line)
 
     return 1;
 }
+
+void markerNormalSortStart (FILE* file)
+{
+    fprintf(
+           file,
+           "\n"
+           "\n"
+           "\n"
+           "############################################"
+           "    SORTING TEXT FROM THE BEGINNING    "
+           "############################################"
+           "\n"
+           "\n"
+           "\n");
+}
+
+void markerNormalSortEnd (FILE* file)
+{ 
+    fprintf(
+           file,
+           "\n"
+           "\n"
+           "\n"
+           "############################################"
+           "    FINISHED SORTING TEXT FROM THE BEGINNING    "
+           "############################################"
+           "\n"
+           "\n"
+           "\n");
+}
+
+void markerReverseSortStart (FILE* file)
+{
+    fprintf(
+           file,
+           "\n"
+           "\n"
+           "\n"
+           "############################################"
+           "    SORTING TEXT FROM THE END   "
+           "############################################"
+           "\n"
+           "\n"
+           "\n");
+}
+
+void markerReverseSortEnd (FILE* file)
+{ 
+    fprintf(
+           file,
+           "\n"
+           "\n"
+           "\n"
+           "############################################"
+           "    FINISHED SORTING TEXT FROM THE END  "
+           "############################################"
+           "\n"
+           "\n"
+           "\n");
+}
+
+void markerNoSortStart (FILE* file)
+{ 
+    fprintf(
+           file,  
+           "\n"
+           "\n"
+           "\n"
+           "############################################"
+           "    DUMPING THE ORIGINAL TEXT   "
+           "############################################"
+           "\n"
+           "\n"
+           "\n");
+}
+
+void markerNoSortEnd (FILE* file)
+{ 
+    fprintf
+          (
+           file,
+           "\n"
+           "\n"
+           "\n"
+           "############################################"
+           "    FINISHED DUMPING THE ORIGINAL TEXT  "
+           "############################################"
+           "\n"
+           "\n"
+           "\n");
+}

@@ -34,4 +34,11 @@ void transitFileToLineArray (FILE* inputFile, struct Text* text);
 void printLinesArray (FILE* file, struct Text* text);
 void runThroughText (char* text, size_t textSize);
 
+void markerNormalSortStart (FILE* file);
+void markerNormalSortEnd (FILE* file);
+void markerReverseSortStart (FILE* file);
+void markerReverseSortEnd (FILE* file);
+void markerNoSortStart (FILE* file);
+void markerNoSortEnd (FILE* file);
+
 #endif
