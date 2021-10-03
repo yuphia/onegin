@@ -12,7 +12,6 @@ int putsMy (char* str)
         //printf ("%d", str [counter]);
         putchar (str [counter]);
         counter++;
-        printf ("123\n");
     }
 
     return (ferror (stdout)) ? EOF : 0;

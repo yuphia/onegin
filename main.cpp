@@ -1,3 +1,9 @@
+/** \file main.cpp
+ * \brief All main calls are located in this file 
+ **/
+
+/** \mainpage Onegin. A program used to sort your input text in alphabetical and reverse (from the end) order.*/
+
 #include <stdio.h>
 #include <iostream>
 #include "strlibMy.h"

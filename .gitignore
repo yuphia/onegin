@@ -1,3 +1,6 @@
 *.out
 *.gch
-build/
+build/*
+html/*
+latex/*
+
