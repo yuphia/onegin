@@ -28,7 +28,7 @@
             printf ("An error has occured in file:" __FILE__ "\n\n"\
                     "In Line: %d \n\n"\
                     "While executing function: %s\n\n" , __LINE__, __PRETTY_FUNCTION__);\
-            abort();\
+            abort();\//
         }
     #endif
 #endif

@@ -8,7 +8,7 @@
 
 #define FILEINPUTTREATMENT_H    
 
-#include "myAssert.h"
+#include "../MistakeHandling/myAssert.h"
 #include <stdio.h>
 #include <cstring>
 #include <iostream>

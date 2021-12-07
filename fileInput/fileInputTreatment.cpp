@@ -66,6 +66,7 @@ void transitFileToLineArray (FILE* inputFile, struct Text* text)
     transitFileToText (inputFile, text);
 
     text -> nLines = countLines (text -> textArray, text -> textSize);
+    printf ("nlines = %zu\n", text -> nLines);
 
     text -> lines = transitTextToLineArray (&text -> nLines, text -> textArray);
 }
@@ -97,11 +98,12 @@ struct Line* transitTextToLineArray (size_t* lineAmount, char* text)
             termChars = 1;
         }
 
+        printf ("start of line: %s\n",startOfLine);
+
         if (!isLineEmpty (startOfLine))
         {
             arrayOfStrings[i].line = startOfLine;
             arrayOfStrings[i].lineSize = (size_t)(endOfLine - startOfLine);
-
             startOfLine = endOfLine + termChars;
         }
         else
@@ -161,7 +163,7 @@ bool isLineEmpty (char* line)
 {
     for (; *line != '\0'; line++)
     {
-        if (isalpha(*line))
+        if (isalpha(*line) || isdigit (*line))
             return 0;
     }
 
